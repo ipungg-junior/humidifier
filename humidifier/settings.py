@@ -76,5 +76,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
+# Static config akan disesuaikan saat mode productioin
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'root')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
