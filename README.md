@@ -10,15 +10,18 @@ Fungsi        | Url API            | Method
 Register      | /service/register/ | GET
 Publish Data  | /service/publish/  | POST
 
-* Register API
+* __Register API__
   
   Register API digunakan untuk mendaftarkan device (humidifier) ke server.
   Setelah device terdaftar, maka device bisa duhubungkan atau _linking_ ke akun RS.
   
-  __Request__
+  Request Header
   
-  ``` Method POST
-  asdsda
   ```
+    X-Machine-Code : XXXXXXX
+  ```
+  Tambahkan header tambahan diatas berupa kode mesin humidifier untuk mendaftarkan device ke server.
+  Kode mesin digunakan untuk tanda pengenal. _(unique)_
+  
 
 * Publish data API
