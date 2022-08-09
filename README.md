@@ -9,3 +9,5 @@ Fungsi        | Url API            | Method
 ------------- | -------------      | -------------
 Register      | /service/register/ | GET
 Publish Data  | /service/publish/  | POST
+
+* Bullet List
