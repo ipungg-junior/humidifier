@@ -5,7 +5,7 @@ Humidifier Project (PT. Mursmedic Jaya Mandiri)
 #### End-point untuk device register dan publish data.
 ===
 ####
-Fungsi        | Url API
-------------- | -------------
-Register      | /service/register/
-Publish Data  | /service/publish/
+Fungsi        | Url API            | Method
+------------- | -------------      | -------------
+Register      | /service/register/ | GET
+Publish Data  | /service/publish/  | POST
