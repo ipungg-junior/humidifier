@@ -14,5 +14,11 @@ Publish Data  | /service/publish/  | POST
   
   Register API digunakan untuk mendaftarkan device (humidifier) ke server.
   Setelah device terdaftar, maka device bisa duhubungkan atau _linking_ ke akun RS.
+  
+  __Request__
+  
+  ``` Method POST
+  asdsda
+  ```
 
 * Publish data API
