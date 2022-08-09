@@ -48,6 +48,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'humidifier.wsgi.application'
 
+
+AUTH_USER_MODEL = 'apps.ClientAccount'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

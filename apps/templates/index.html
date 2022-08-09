@@ -1,0 +1,268 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+  #banner-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+  }
+  #banner-description {
+    font-family: 'Poppins', sans-serif;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="{% static 'apps/assets/images/logo.png' %}" alt="Chain App Dev">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section nav-item"><a href="#top" class="active">Home</a></li>
+              <li class="scroll-to-section nav-item"><a href="/monitoring">Monitoring</a></li>
+              <li class="scroll-to-section nav-item"><a href="#about">Device</a></li>
+              <li><div class="gradient-button"><a id="modal_trigger" href="#modal"><i class="fas fa-sign-in-alt"></i> Get Started</a></div></li> 
+            </ul>        
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+  
+
+  <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6 align-self-center">
+              <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h2 id="banner-title" style="margin-bottom: 1px;">Prototype Humidifier</h2>
+                    <p id="banner-description" style="color: rgb(140, 136, 133);">
+                      Alat pelembap udara yang bekerja dengan cara menyemprotkan uap air ke  
+                      udara. Penggunaan humidifier tidak hanya membuat kelembapan udara terjaga, 
+                      tapi juga dapat membantu mengatasi iritasi yang dipicu oleh udara kering,  
+                      seperti kulit kering, bibir pecah-pecah, pilek, hingga sakit tenggorokan.
+                    </p>
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="right-image wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+                <img src="{% static 'apps/assets/images/slider-dec.png' %}" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="services" class="services section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+            <h4>Memberikan <em>Kenyamanan &amp; Terbaik</em> untuk Pengguna </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Container -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- card pertama -->
+          <div class="service-item first-service">
+            <div class="icon"></div>
+            <h4>Produk Indonesia</h4>
+            <p>Dibuat 100% oleh PT. Mursmedic Jaya Mandiri.</p>
+            <div class="text-button">
+              <a href="#">Read More <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <!-- card kedua -->
+          <div class="service-item second-service">
+            <div class="icon"></div>
+            <h4>Mudah Digunakan</h4>
+            <p>User Interface yang menarik dan mudah digunakan</p>
+            <div class="text-button">
+              <a href="#">Read More <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="service-item third-service">
+            <div class="icon"></div>
+            <h4>Bahan Kuat</h4>
+            <p>Menggunakan bahan utama Mild Steel</p>
+            <div class="text-button">
+              <a href="#">Read More <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <!-- card kedua -->
+          <div class="service-item fourth-service">
+            <div class="icon"></div>
+            <h4>Desain Elegan dan Futuristik</h4>
+            <p>Desain </p>
+            <div class="text-button">
+              <a href="#">Read More <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Fitur -->
+  <div id="about" class="about-us section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center">
+
+          <div class="right-image">
+            <img src="{% static 'apps/assets/images/about-right-dec.png' %}" alt="">
+          </div>
+        </div>
+
+
+        <div class="col-lg-6">
+          
+        <div class="section-heading">
+          <h4>Tentang <em>Fitur Humidifier</em></h4>
+        </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="box-item">
+                <h4><a>Pengaturan Suhu Udara</a></h4>
+                <p>Lorem Ipsum Text</p>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="box-item">
+                <h4><a>Akurasi Pembacaan Suhu</a></h4>
+                <p>Lorem Ipsum Text</p>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="box-item">
+                <h4><a>Terintegrasi Internet</a></h4>
+                <p>Lorem Ipsum Text</p>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="box-item">
+                <h4><a>Layar Sentuh</a></h4>
+                <p>Lorem Ipsum Text</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer id="newsletter">
+    <div class="container" style="margin: auto;">
+
+      <div class="foot-container">
+
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>About Us</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Testimonials</a></li>
+              <li><a href="#">Pricing</a></li>
+            </ul>
+            <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Testimonials</a></li>
+              <li><a href="#">Pricing</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Free Apps</a></li>
+              <li><a href="#">App Engine</a></li>
+              <li><a href="#">Programming</a></li>
+              <li><a href="#">Development</a></li>
+              <li><a href="#">App News</a></li>
+            </ul>
+            <ul>
+              <li><a href="#">App Dev Team</a></li>
+              <li><a href="#">Digital Web</a></li>
+              <li><a href="#">Normal Apps</a></li>
+            </ul>
+          </div>
+        </div>
+      
+      </div>
+
+      <div class="col-lg-12">
+        <div class="copyright-text">
+          <p>Copyright © 2022 Chain App Dev Company. All Rights Reserved. 
+        <br>Design: <a href="https://templatemo.com/" target="_blank" title="css templates">TemplateMo</a></p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'apps/assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'apps/assets/js/animation.js' %}"></script>
+  <script src="{% static 'apps/assets/js/imagesloaded.js' %}"></script>
+  <script src="{% static 'apps/assets/js/popup.js' %}"></script>
+  <script src="{% static 'apps/assets/js/custom.js' %}"></script>
+</body>
+
+{% endblock content %}

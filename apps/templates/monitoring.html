@@ -1,0 +1,450 @@
+<!-- add base html and compile static file to this file -->
+{% extends 'base/base.html' %}
+{% load static %}
+
+<!-- block to add own style this file -->
+{% block style %}
+<style>
+  .hero-image {
+    background-image: url("{% static 'apps/assets/images/background2.png' %}");
+    height: 16rem;
+    top: 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+  }
+
+  .hero-image h1 {
+    font-size: 43pt;
+  }
+
+  .hero-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+
+  .monitor-nav {
+    margin-top: 20px !important;
+  }
+
+  /* navbar */
+
+  .navbar-colored {
+    background-color: rgb(243, 243, 243) !important;
+    transition: background-color 320ms linear;
+  }
+
+  .nav-item {
+    margin-right: 0.8rem;
+  }
+
+  .nav-link.active {
+    font-weight: bold;
+  }
+
+  .nav-link {
+    font-size: 20px;
+  }
+
+  /* MODAL CUSTOM CSS - ADD DEVICE MODAL */
+  .main-modal {
+    display: none;
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    justify-self: center;
+  }
+
+  .modal-title {
+    display: flex;
+    justify-content: center;
+    padding: 1em 0 1em 0;
+    background-color: #f5f4f4;
+    margin: 10% auto 0;
+    border-radius: 5px 5px 0 0;
+    width: 40%;
+    /* Could be more or less, depending on screen size */
+  }
+
+  .modal-title p {
+    text-decoration: none;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: large;
+    color: black;
+
+  }
+
+  .modal-contents {
+    background-color: #f5f4f4;
+    margin: 0 auto;
+    padding: .5em;
+    width: 40%;
+    /* Could be more or less, depending on screen size */
+  }
+
+  .modal-contents .item-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 2em;
+  }
+
+  .modal-contents .item-box.button {
+    margin-top: 1em;
+  }
+
+  .item-box .modal-btn input[type=button],
+  input[type=submit],
+  input[type=reset] {
+    background-color: rgb(17, 163, 156);
+    border: none;
+    border-radius: 5px 5px 5px 5px;
+    color: rgb(238, 236, 236);
+    text-decoration: none;
+    cursor: pointer;
+    height: 80%;
+    width: 7em;
+  }
+
+
+  /* 
+      (ALERT)
+      Box pemberitahuan
+  */
+
+  .alerts {
+    display: none;
+    position: fixed;
+    padding: 20px;
+    background-color: #17a8cc;
+    color: white;
+    margin-left: 20px;
+  }
+
+  .closebtnn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .closebtnn:hover {
+    color: black;
+  }
+</style>
+
+
+{% endblock style %}
+
+
+<!-- block body this page/file -->
+{% block content %}
+
+<body>
+
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <!-- Navbar -->
+        <nav id="navbarID" class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
+          <div class="container">
+            <!-- logo -->
+            <a href="index.html" class="logo">
+              <img src="{% static 'apps/assets/images/logo.png' %}" alt="MJM logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- menu -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="">Monitoring</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li style="cursor: pointer;"><a class="dropdown-item" id="add-device-item"><i
+                          class="fa fa-plus">&nbsp;Add Device</i></a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa fa-gear">&nbsp;Account Settings</i></a></li>
+                    <li>
+                      <hr style="margin-bottom: 0.3rem;">
+                    </li>
+                    <li><a class="dropdown-item" href="/account/logout/"><i class="fa fa-sign-out">&nbsp;Logout</i></a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MODAL HTML -->
+  <div class="main-modal" id="main-modal">
+
+    <div class="modal-title">
+      <p>Add Device</p>
+    </div>
+    <div class="modal-contents">
+      <div class="item-box text">
+        {{form.deviceID}}
+      </div>
+      <div class="item-box text">
+        {{form.deviceRoom}}
+      </div>
+      <div class="item-box button">
+        <input id="modal-btn-submit" class="modal-btn" type="submit" value="Submit">
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="hero-image">
+    <h1 style="font-weight: 700;">Monitoring Humidifier</h1>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+
+      <div class="row" style="justify-content: center;">
+
+        <!-- LOOP -->
+        {% for i in device_list %}
+        <div class="col-lg-2" style="width: 20%;margin: 1em 0 1em 0;">
+
+          {% if i.status %}
+          <div id="card-{{i.deviceID}}" class="text-white monitoring-card active" style="position: inherit;">
+          {% else %}
+          <div id="card-{{i.deviceID}}" class="text-white monitoring-card deactivate" style="position: inherit;">
+          {% endif %}
+
+                <!-- icon humidifier -->
+                <div class="monitoring-card-icon">
+                  <a href="/monitoring/{{i.deviceID}}/">
+                    <img src="{% static 'apps/assets/images/device-humidifier.png' %}" alt="Device" height="70">
+                  </a>
+                </div>
+
+                <div class="monitoring-card-description">
+                    <div class="monitoring-card-description room">
+                      <a style="text-align: left;">
+                        {{i.deviceRoom}}
+                      </a>
+                    </div>
+                    <div class="monitoring-card-description device-id">
+                      <a style="text-align: left;">
+                        {{i.deviceID}}
+                      </a>
+                    </div>
+                    <div class="monitoring-card-description temp">
+                      <a id="temp-chamber-{{i.deviceID}}">
+                        <!-- MAIN SENSOR -->
+                      </a>
+                      <a> &#8451;</a>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+          {% endfor %}
+          <!--  -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <footer id="newsletter">
+    <div class="container" style="margin: auto;">
+
+      <div class="foot-container">
+
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>About Us</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Testimonials</a></li>
+              <li><a href="#">Pricing</a></li>
+            </ul>
+            <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Testimonials</a></li>
+              <li><a href="#">Pricing</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Free Apps</a></li>
+              <li><a href="#">App Engine</a></li>
+              <li><a href="#">Programming</a></li>
+              <li><a href="#">Development</a></li>
+              <li><a href="#">App News</a></li>
+            </ul>
+            <ul>
+              <li><a href="#">App Dev Team</a></li>
+              <li><a href="#">Digital Web</a></li>
+              <li><a href="#">Normal Apps</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-12">
+        <div class="copyright-text">
+          <p>Copyright © 2022 Chain App Dev Company. All Rights Reserved.
+            <br>Design: <a href="https://templatemo.com/" target="_blank" title="css templates">TemplateMo</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'apps/assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'apps/assets/js/animation.js' %}"></script>
+  <script src="{% static 'apps/assets/js/imagesloaded.js' %}"></script>
+  <script src="{% static 'apps/assets/js/popup.js' %}"></script>
+  <script src="{% static 'apps/assets/js/custom.js' %}"></script>
+
+  <!-- websocket configuration -->
+  <!-- countdown config variable -->
+  <script>
+    var device_timelapse = [];
+
+    {% for i in device_list %}
+    // Add device list as dict in Array
+    device_timelapse.push({
+      'id': {{ i.deviceID }},
+      'timelive': 2,
+      'status': '{{i.status}}',
+      'code': 0,
+      'alertCounter': 50,
+    });
+
+    {% endfor %}
+
+    function report(deviceID) {
+      $.ajax({
+        type: "POST",
+        url: "/service/disconnect/",
+        headers: {
+          "X-CSRFToken": "{{csrf_token}}",
+          "Content-Type": "application/json",
+        },
+        data: {
+          "deviceID": deviceID,
+        },
+        success: function (data) {
+          console.log("success");
+          console.log(data);
+        },
+        failure: function (data) {
+        },
+      });
+    }
+
+  </script>
+
+
+
+
+  <!-- navbar js scrolled -->
+  <script type="text/javascript">
+    var aa = document.getElementById("navbarID");
+    var bb = document.getElementsByClassName("nav-link");
+    window.onscroll = function () {
+      "use strict";
+      if (window.pageYOffset >= 190) {
+        aa.classList.remove('bg-transparent');
+        aa.classList.add('navbar-colored');
+        for (var i = 0; i < bb.length; i++) {
+          bb[i].style.color = "rgb(38, 38, 38)";
+        }
+      } else {
+        aa.classList.remove('navbar-colored');
+        for (var i = 0; i < bb.length; i++) {
+          bb[i].style.color = "whitesmoke";
+        }
+        aa.classList.add('bg-transparent');
+      }
+    };
+  </script>
+
+
+  <script src="{% static 'apps/js/device-post.js' %}"></script>
+  <script src="{% static 'apps/js/register-device.js' %}"></script>
+
+</body>
+
+</html>
+
+
+{% endblock content %}
