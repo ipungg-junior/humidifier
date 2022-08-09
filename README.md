@@ -41,6 +41,5 @@ Publish Data  | /service/publish/  | POST
  
   ```
   Body json diatas berupa kode mesin humidifier untuk mendaftarkan device ke server.
-  Kode mesin digunakan untuk tanda pengenal. _(unique)_
 
 	Modifikasi ini dari lokal
