@@ -11,5 +11,6 @@ Register      | /service/register/ | GET
 Publish Data  | /service/publish/  | POST
 
 * Register API
-  `code()`
+Register API digunakan untuk mendaftarkan device (humidifier) ke server.
+Setelah device terdaftar, maka device bisa duhubungkan atau __linking__ ke akun RS.
 * Publish data API
