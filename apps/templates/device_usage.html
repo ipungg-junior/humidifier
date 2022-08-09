@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>Device History</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'apps/assets/css/templatemo-chain-app-dev.css' %}">
+    <link rel="stylesheet" href="{% static 'apps/assets/css/animated.css' %}">
+    <link rel="stylesheet" href="{% static 'apps/assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'apps/chart/Chart.min.css' %}">
+    <script src="{% static 'apps/chart/chart.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" charset="utf-8"></script>
+    
+    <style>
+        .chartWrapper {
+           position: relative;
+        }
+        .chartWrapper > canvas {
+           position: absolute;
+           left: 0;
+           top: 0;
+           pointer-events:none;
+        }
+        .chart-area-wrapper {
+           width: 600px;
+           overflow-x: scroll;
+        }
+    </style>
+
+  </head>
+
+  <body>
+    
+    <!-- True | Device sedang dipakai -->
+    <div class="col-lg-12">
+        
+        <h2 style="text-align: center;">
+            History Pemakaian
+        </h2>
+        
+        <div class="row" style="display: flex; flex-direction: column;">
+            {% for i in all_session %}
+            <!-- Loop per session -->
+                    <h4 style="text-align: center;">Session ID : {{i.sessionID}}</h4>
+                    <a style="text-align: center;">Start Session: {{i.start_session}}</a>
+                    <a style="text-align: center;">Stop Session: {{i.stop_session}}</a>
+                    <!-- chart -->
+                    <div class="row chartWrapper" style="justify-content: center;">
+                        <div class="chart-area-wrapper" style="width: 60%; height: 400px; margin-bottom: 8rem;">
+                            <canvas id="chart-{{i}}"></canvas>
+                        </div>
+                        <canvas id="chart-axes-{{i}}" height="300" width="0"></canvas>
+                    </div>
+
+                    <script>
+                        var xValues = [
+                            {%for lx in i.deviceusage_set.all%}
+                                {{ forloop.counter }},
+                            {% endfor %}                      
+                        ];
+                        var ctx{{i}} = document.getElementById("chart-{{i}}").getContext("2d");
+                        var data{{i}} = 
+                        {
+                            labels: xValues,
+                            datasets: [
+                                {
+                                    label: 'Temperature 1',
+                                    borderColor: 'blue',
+                                    fill: false,
+                                    data:
+                                        [
+                                            {% for d in i.deviceusage_set.all %}
+                                                {{d.temp_1}},
+                                            {%endfor%}                                            
+                                        ]
+                                },   
+                                {
+                                    label: 'Temperature 2',
+                                    borderColor: 'green',
+                                    fill: false,
+                                    data:
+                                        [
+                                            {% for d in i.deviceusage_set.all %}
+                                                {{d.temp_2}},
+                                            {%endfor%}
+                                        ]
+                                },
+                                {
+                                    label: 'Temperature 3',
+                                    borderColor: 'red',
+                                    fill: false,
+                                    data: 
+                                        [
+                                            {% for d in i.deviceusage_set.all %}
+                                                {{d.temp_3}},
+                                            {%endfor%}
+                                        ]
+                                }
+                                
+                            ]
+                        };
+
+                        const line{{i}} = {
+                            type: 'line',
+                            data: data{{i}}
+                        }
+
+                        new Chart(ctx{{i}}, line{{i}}, {
+                            onAnimationComplete: function () {
+                                var sourceCanvas{{i}} = this.chart.ctx{{i}}.canvas;
+                                var copyWidth{{i}} = this.scale.xScalePaddingLeft - 5;
+                                var copyHeight{{i}} = this.scale.endPoint + 5;
+                                var targetCtx{{i}} = document.getElementById("chart-axes-{{i}}").getContext("2d");
+                                targetCtx{{i}}.canvas.width = copyWidth;
+                                targetCtx{{i}}.drawImage(sourceCanvas{{i}}, 0, 0, copyWidth{{i}}, copyHeight{{i}}, 0, 0, copyWidth{{i}}, copyHeight{{i}});
+                            }
+                        });
+
+                    </script>
+                       
+
+                                             
+                {% endfor %}
+
+    </div>    
+    
+  </body>
+  <!-- Chart JS -->
+
+  
+</html>
