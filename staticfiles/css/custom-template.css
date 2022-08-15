@@ -987,7 +987,7 @@ Services Style
 
 .services:after {
   content: '';
-  background-image: url(../images/services-left-dec.png);
+  background-image: url(../services-left-dec.png);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -999,7 +999,7 @@ Services Style
 
 .services:before {
   content: '';
-  background-image: url(../images/services-right-dec.png);
+  background-image: url(../services-right-dec.png);
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -1058,40 +1058,40 @@ Services Style
 }
 
 .first-service .icon {
-  background-image: url(../images/service-icon-01.png);
+  background-image: url(../service-icon-01.png);
 }
 
 .first-service:hover .icon {
-  background-image: url(../images/service-icon-hover-01.png);
+  background-image: url(../service-icon-hover-01.png);
 }
 
 .second-service .icon {
-  background-image: url(../images/service-icon-02.png);
+  background-image: url(../service-icon-02.png);
 }
 
 .second-service:hover .icon {
-  background-image: url(../images/service-icon-hover-02.png);
+  background-image: url(../service-icon-hover-02.png);
 }
 
 
 .third-service .icon {
-  background-image: url(../images/service-icon-03.png);
+  background-image: url(../service-icon-03.png);
 }
 
 .third-service:hover .icon {
-  background-image: url(../images/service-icon-hover-03.png);
+  background-image: url(../service-icon-hover-03.png);
 }
 
 .fourth-service .icon {
-  background-image: url(../images/service-icon-04.png);
+  background-image: url(../service-icon-04.png);
 }
 
 .fourth-service:hover .icon {
-  background-image: url(../images/service-icon-hover-04.png);
+  background-image: url(../service-icon-hover-04.png);
 }
 
 .service-item:hover {
-  background-image: url(../images/service-bg.jpg);
+  background-image: url(../service-bg.jpg);
   background-position: right top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1165,7 +1165,7 @@ About Us
 }
 
 .about-us:after {
-  background-image: url(../images/about-bg.jpg);
+  background-image: url(../about-bg.jpg);
   width: 777px;
   height: 1132px;
   content: '';
@@ -1281,7 +1281,7 @@ The Clients
 
 .the-clients .nacc .thumb .client-content {
   padding: 60px 30px;
-  background-image: url(../images/client-bg.png);
+  background-image: url(../client-bg.png);
   background-size: cover;
   border-radius: 50px;
   width: 100%;
@@ -1492,7 +1492,7 @@ The Clients
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url(../images/pro-table-top.png);
+  background-image: url(../pro-table-top.png);
   z-index: 0;
   content: '';
   width: 281px;
@@ -1505,7 +1505,7 @@ The Clients
   right: 0;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url(../images/pro-table-bottom.png);
+  background-image: url(../pro-table-bottom.png);
   z-index: 0;
   content: '';
   width: 100%;
@@ -1565,7 +1565,7 @@ Free Quote
 */
 
 .free-quote {
-  background-image: url(../images/quote-bg.jpg);
+  background-image: url(../quote-bg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1639,7 +1639,7 @@ Footer Style
 */
 
 footer {
-  background-image: url(../images/footer-bg.png);
+  background-image: url(../footer-bg.png);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
