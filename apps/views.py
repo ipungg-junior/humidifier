@@ -116,10 +116,6 @@ class Monitoring(View):
 
 
 
-
-
-
-
 @login_required(login_url='/account/login/', redirect_field_name='/monitoring/')
 def deviceUsage(req, deviceID):
     status, all_session = ManagementDevice.showHistory(req.user, deviceID)
