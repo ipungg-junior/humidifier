@@ -6,7 +6,7 @@
     
     <style>
         .hero-image {
-        background-image: url("{% static 'apps/assets/images/background2.png' %}");
+        background-image: url("{% static 'assets/background2.png' %}");
         height: 16rem;
         top: 0;
         background-position: center center;
@@ -28,7 +28,7 @@
 
     <div class="hero-image">
         <i>
-            <img src="{% static 'apps/assets/images/device-humidifier.png' %}" alt="Device" style="width: 4em;">
+            <img src="{% static 'assets/device-humidifier.png' %}" alt="Device" style="width: 4em;">
         </i>
         <h4 style="font-weight: 700;"><strong><u>Humidifier - {{device.deviceID}}</u></strong></h4>
         <p style="font-weight: 700; font-size: large;">{{device.deviceRoom}}</p>
@@ -41,7 +41,7 @@
             <div class="container">
                 <!-- logo -->
                 <a href="index.html" class="logo">
-                    <img src="{% static 'apps/assets/images/logo.png' %}" alt="MJM logo">
+                    <img src="{% static 'assets/logo.png' %}" alt="MJM logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
@@ -57,13 +57,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-black" href="/monitoring/">Monitoring</a>
                         </li>
-                        <li class="nav-item dropdown" style="background-color: bisque;">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-user"></i>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
-                                style="background-color: bisque;">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li style="cursor: pointer;"><a class="dropdown-item" id="add-device-item"><i
                                             class="fa fa-plus">&nbsp;Add Device</i></a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa fa-gear">&nbsp;Account
@@ -162,14 +161,14 @@
     <script>
         let deviceID = {{ device.deviceID }};
     </script>
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'apps/assets/js/owl-carousel.js' %}"></script>
-    <script src="{% static 'apps/assets/js/animation.js' %}"></script>
-    <script src="{% static 'apps/assets/js/imagesloaded.js' %}"></script>
-    <script src="{% static 'apps/assets/js/popup.js' %}"></script>
-    <script src="{% static 'apps/assets/js/custom.js' %}"></script>
-    <script src="{% static 'apps/js/device-post-detail.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/owl-carousel.js' %}"></script>
+    <script src="{% static 'js/animation.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.js' %}"></script>
+    <script src="{% static 'js/popup.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/device-post-detail.js' %}"></script>
 </body>
 
 {% endblock content %}
