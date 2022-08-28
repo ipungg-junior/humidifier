@@ -1492,7 +1492,7 @@ The Clients
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url(../images/pro-table-top.png);
+  background-image: url(../pro-table-top.png);
   z-index: 0;
   content: '';
   width: 281px;
@@ -1505,7 +1505,7 @@ The Clients
   right: 0;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url(../images/pro-table-bottom.png);
+  background-image: url(../pro-table-bottom.png);
   z-index: 0;
   content: '';
   width: 100%;
@@ -1565,7 +1565,7 @@ Free Quote
 */
 
 .free-quote {
-  background-image: url(../images/quote-bg.jpg);
+  background-image: url(../quote-bg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
