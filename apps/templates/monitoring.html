@@ -6,7 +6,7 @@
 {% block style %}
 <style>
   .hero-image {
-    background-image: url("{% static 'apps/assets/images/background2.png' %}");
+    background-image: url("{% static 'assets/background2.png' %}");
     height: 16rem;
     top: 0;
     background-position: center center;
@@ -191,12 +191,13 @@
           <div class="container">
             <!-- logo -->
             <a href="index.html" class="logo">
-              <img src="{% static 'apps/assets/images/logo.png' %}" alt="MJM logo">
+              <img src="{% static 'assets/logo.png' %}" alt="MJM logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
               aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+
             <!-- menu -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
               <ul class="navbar-nav">
@@ -273,7 +274,7 @@
                 <!-- icon humidifier -->
                 <div class="monitoring-card-icon">
                   <a href="/monitoring/{{i.deviceID}}/">
-                    <img src="{% static 'apps/assets/images/device-humidifier.png' %}" alt="Device" height="70">
+                    <img src="{% static 'assets/device-humidifier.png' %}" alt="Device" height="70">
                   </a>
                 </div>
 
@@ -366,13 +367,13 @@
 
 
   <!-- Scripts -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'apps/assets/js/owl-carousel.js' %}"></script>
-  <script src="{% static 'apps/assets/js/animation.js' %}"></script>
-  <script src="{% static 'apps/assets/js/imagesloaded.js' %}"></script>
-  <script src="{% static 'apps/assets/js/popup.js' %}"></script>
-  <script src="{% static 'apps/assets/js/custom.js' %}"></script>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/owl-carousel.js' %}"></script>
+  <script src="{% static 'js/animation.js' %}"></script>
+  <script src="{% static 'js/imagesloaded.js' %}"></script>
+  <script src="{% static 'js/popup.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
 
   <!-- websocket configuration -->
   <!-- countdown config variable -->
@@ -439,8 +440,8 @@
   </script>
 
 
-  <script src="{% static 'apps/js/device-post.js' %}"></script>
-  <script src="{% static 'apps/js/register-device.js' %}"></script>
+  <script src="{% static 'js/device-post.js' %}"></script>
+  <script src="{% static 'js/register-device.js' %}"></script>
 
 </body>
 
