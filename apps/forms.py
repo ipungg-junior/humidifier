@@ -11,8 +11,16 @@ class LoginForm(forms.ModelForm):
             'password' : forms.PasswordInput(attrs={'placeholder' :'Password', 'autocomplete': 'password', 'class': 'form-control'})
         }
 
-class DeviceSessionSetupForm(forms.Form):
-    user = forms.CharField()
+class RegisterForm(forms.ModelForm):
+
+    class Meta:
+        model = ClientAccount   
+        fields = ('email', 'password')
+        widgets = {
+            'email' : forms.EmailInput(attrs={'placeholder' :'Email', 'class': 'form-control'}),
+            'password' : forms.PasswordInput(attrs={'placeholder' :'Password', 'autocomplete': 'password', 'class': 'form-control'})
+        }
+
 
 class AddDeviceForm(forms.ModelForm):
 
@@ -23,3 +31,6 @@ class AddDeviceForm(forms.ModelForm):
             'deviceID' : forms.TextInput(attrs={'placeholder' :'Device ID', 'class': 'form-control'}),
             'deviceRoom' : forms.TextInput(attrs={'placeholder' :'Ruangan', 'class': 'form-control'}),
         }
+
+class DeviceSessionSetupForm(forms.Form):
+    user = forms.CharField()
