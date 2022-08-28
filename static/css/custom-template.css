@@ -987,7 +987,7 @@ Services Style
 
 .services:after {
   content: '';
-  background-image: url(../services-left-dec.png);
+  background-image: url(../assets/services-left-dec.png);
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -999,7 +999,7 @@ Services Style
 
 .services:before {
   content: '';
-  background-image: url(../services-right-dec.png);
+  background-image: url(../assets/services-right-dec.png);
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -1058,40 +1058,40 @@ Services Style
 }
 
 .first-service .icon {
-  background-image: url(../service-icon-01.png);
+  background-image: url(../assets/service-icon-01.png);
 }
 
 .first-service:hover .icon {
-  background-image: url(../service-icon-hover-01.png);
+  background-image: url(../assets/service-icon-hover-01.png);
 }
 
 .second-service .icon {
-  background-image: url(../service-icon-02.png);
+  background-image: url(../assets/service-icon-02.png);
 }
 
 .second-service:hover .icon {
-  background-image: url(../service-icon-hover-02.png);
+  background-image: url(../assets/service-icon-hover-02.png);
 }
 
 
 .third-service .icon {
-  background-image: url(../service-icon-03.png);
+  background-image: url(../assets/service-icon-03.png);
 }
 
 .third-service:hover .icon {
-  background-image: url(../service-icon-hover-03.png);
+  background-image: url(../assets/service-icon-hover-03.png);
 }
 
 .fourth-service .icon {
-  background-image: url(../service-icon-04.png);
+  background-image: url(../assets/service-icon-04.png);
 }
 
 .fourth-service:hover .icon {
-  background-image: url(../service-icon-hover-04.png);
+  background-image: url(../assets/service-icon-hover-04.png);
 }
 
 .service-item:hover {
-  background-image: url(../service-bg.jpg);
+  background-image: url(../assets/service-bg.jpg);
   background-position: right top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1165,7 +1165,7 @@ About Us
 }
 
 .about-us:after {
-  background-image: url(../images/about-bg.jpg);
+  background-image: url(../assets/about-bg.jpg);
   width: 777px;
   height: 1132px;
   content: '';
@@ -1281,7 +1281,7 @@ The Clients
 
 .the-clients .nacc .thumb .client-content {
   padding: 60px 30px;
-  background-image: url(../images/client-bg.png);
+  background-image: url(../assets/client-bg.png);
   background-size: cover;
   border-radius: 50px;
   width: 100%;
@@ -1639,7 +1639,7 @@ Footer Style
 */
 
 footer {
-  background-image: url(../images/footer-bg.png);
+  background-image: url(../assets/footer-bg.png);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;

@@ -10,6 +10,7 @@ urlpatterns = [
     path('monitoring/', Monitoring.as_view(context='monitoring-list')),                        
     path('monitoring/<str:deviceID>/', Monitoring.as_view(context='monitoring-detail')),
     path('monitoring/<str:deviceID>/usage/', deviceUsage),
+    
     # Service API esp32
     path('service/register/', EspView.as_view(context='register-device')),
     path('service/post/', EspView.as_view(context='publish')),
