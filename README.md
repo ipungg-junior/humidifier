@@ -1,45 +1,57 @@
 # Humidifier Project
 Humidifier Project (PT. Mursmedic Jaya Mandiri)
 
-## Service API (esp32)
-### End-point untuk device register dan publish data.
-* Cheatsheet Table
+## Service API (for esp32 device)
+### End-point untuk device session dan publish data.
 
-Fungsi        | Url API            | Method
-------------- | -------------      | -------------
-Register      | /service/register/ | GET
-Publish Data  | /service/publish/  | POST
+  API ini digunakan pada sisi device (esp32). Ada 2 end-point yang digunakan yaitu Register Session dan Publish Data.
 
-* __Register API__
+* __Cheatsheet Table__
+
+Fungsi        		| Url API            		| Method
+------------- 		| -------------      		| -------------
+Register Session     	| /service/register-session/ 	| GET
+Publish Data  		| /service/publish/  		| POST
+
+
+* __Register Session API__
   
-  Register API digunakan untuk mendaftarkan device (humidifier) ke server.
-  Setelah device terdaftar, maka device bisa duhubungkan atau _linking_ ke akun RS.
+  Register session API digunakan untuk meminta sesi baru kepada server untuk memenuhi proses Publish Data.
+  Nantinya server akan memberi 'SessionID' untuk dimasukan ke request body proses Publish data.
+  Sesi baru akan dimulai saat device humidifier pertama kali dinyalakan dan siap publish data,
+  jika device mati atau restart, maka device harus meminta sesi baru. 
+  
   
   Request Body (JSON)
   
   ```
     {
-      deviceID : <kode-mesin>
+      deviceID : <kode-unik-mesin>
     }
   ```
-  Body json diatas berupa kode mesin humidifier untuk mendaftarkan device ke server.
-  Kode mesin digunakan untuk tanda pengenal. _(unique)_
+  
   
 
-* __Publish data API__
+* __Publish Data API__
+
+  Publish Data API digunakan untuk mengirim atau publish data yang telah di olah dari semua sensor device.
+  Seluruh data sensor/program/algoritma yang diolah humidifier akan dikirimkan ke server melalui API ini
+  dengan menyertakan _sessionID_ pada request body.
+  
+
+  Request Body (JSON)
   ```
     {
-    'deviceID': <kode-mesin>,
+    'deviceID': <string:kode-unik-mesin>,
+    'sessionID': <string:sessionID>,
     'suhu_chamber_a': <string:chamber-a>,
     'suhu_chamber_b': <string:chamber-b>,
     'suhu_output_pasien': <string:output-pasien>,
     'suhu_heater_plate': <string:heater-plate>,
     'arus_heater_plate': <string:arus-heater-plate>,
     'arus_heater_wire': <string:arus-heater-wire>,
-    'code' : <string:chamber-b>,
+    'code' : <string:code-alert>,
     }
  
   ```
-  Body json diatas berupa kode mesin humidifier untuk mendaftarkan device ke server.
 
-	Modifikasi ini dari lokal
