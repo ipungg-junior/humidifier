@@ -4,7 +4,7 @@ import requests,time, random, json, sys
 
 deviceID = sys.argv[1]
 urlNewSession = 'http://127.0.0.1:8000/service/register-session/'
-urlPushData = 'http://127.0.0.1:8000/service/post/'
+urlPushData = 'http://127.0.0.1:8000/service/publish/'
 
  
 
@@ -14,6 +14,7 @@ def publishData(sessionID, code):
     temp3 = random.randint(0, 1)
     myobj = {
     'deviceID':deviceID,
+    'sessionID':sessionID,
     'suhu_chamber_a': str(temp1),
     'suhu_chamber_b': str(temp1+temp2),
     'suhu_output_pasien': str(temp1-temp3),
@@ -22,8 +23,8 @@ def publishData(sessionID, code):
     'arus_heater_wire':str(temp1+temp3+1),
     'code' : str(code),
     }
-    req = requests.post(urlPushData, json=myobj, headers={"Session-ID": sessionID})
-    print(req.status_code)
+    response = requests.post(urlPushData, json=myobj)
+    print(response.status_code)
 
 
 def register(deviceID):
