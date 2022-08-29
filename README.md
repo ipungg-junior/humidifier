@@ -11,7 +11,7 @@ Humidifier Project (PT. Mursmedic Jaya Mandiri)
 
 Fungsi        		| Url API            		| Method
 ------------- 		| -------------      		| -------------
-Register Session     	| /service/register-session/ 	| GET
+Register Session     	| /service/register-session/ 	| POST
 Publish Data  		| /service/publish/  		| POST
 
 
