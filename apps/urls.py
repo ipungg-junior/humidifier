@@ -14,7 +14,7 @@ urlpatterns = [
     
     # Service API esp32
     path('service/register/', EspView.as_view(context='register-device')),
-    path('service/post/', EspView.as_view(context='publish')),
+    path('service/publish/', EspView.as_view(context='publish')),
     path('service/register-session/', EspView.as_view(context='register-session')),
     path('service/disconnect/', EspView.as_view(context='disconnect')),
 ]

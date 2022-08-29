@@ -10,7 +10,7 @@ class Esp32:
 
     ''' Class Esp32 berisi fungsi untuk menghandle 
         seluruh request dari device (esp32) '''
-
+ 
     ## Method to handle register device
     @staticmethod
     def register(req):
@@ -58,11 +58,11 @@ class Esp32:
         deviceID = data['deviceID']
 
         # buat id sesi baru otomatis (random)
-        sessionID = deviceID + randomNum(4)
+        new_sessionID = deviceID + randomNum(4)
         
         # Meminta sesi baru (otomatis)
-        ManagementDevice.startSession(deviceID, sessionID)
-        return HttpResponse(json.dumps({'sessionID': sessionID}))
+        ManagementDevice.startSession(deviceID, new_sessionID)
+        return HttpResponse(json.dumps({'sessionID': new_sessionID}))
 
 
 
@@ -76,10 +76,10 @@ class Esp32:
     @staticmethod
     def receive(req):
  
-        # Mengambil id sesi dari device request pada header
-        sessionID = req.headers['Session-ID']
         # Mengambil data sensor yang dikirim pada body request
         data = JSONServices.decode(req.body)
+        # Mengambil id sesi dari device request body
+        sessionID = data['sessionID']
 
         try:
             ManagementDevice.record(sessionID, data)
