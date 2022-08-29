@@ -26,7 +26,7 @@ Publish Data  | /service/publish/  | POST
   Kode mesin digunakan untuk tanda pengenal. _(unique)_
   
 
-* Publish data API
+* __Publish data API__
   ```
     {
     'deviceID': <kode-mesin>,
