@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from .services.ESP32 import Esp32
-from .services.DBManagement import ManagementDevice
+from .services.DBManagement import ManagementDevice, ManagementAccount
 from .forms import *
 
 
@@ -22,23 +22,33 @@ class LandingPage(View):
 
 
 class Account(View):
-    template = 'login.html'
+    template = ''
     context = ''
 
     def get(self, req):
         if (self.context=='login'):
             if (req.user.is_anonymous):    
                 form = LoginForm()
-                return render(req, self.template, 
+                return render(req, 'login.html', 
                     context={
                         'form': form
                     })
             else:
                 return redirect('/monitoring/')
 
-        else:
+        if (self.context=='register'):
+            if (req.user.is_anonymous):    
+                form = RegisterForm()
+                return render(req, 'register.html', 
+                    context={
+                        'form': form
+                    })
+            else:
+                return redirect('/monitoring/')
+
+        if (self.context=='logout'):
             logout(req)
-            return redirect('/account/login/')
+            return redirect('/')
 
 
     def post(self, req):
@@ -52,6 +62,19 @@ class Account(View):
                 print('{user} : Invalid password')
                 form = LoginForm() 
                 return render(req, 'login.html', context={
+                    'form': form
+                })
+
+        if (self.context=='register'):
+            new_user = ManagementAccount.create_user(req)
+            if new_user is not None:
+                login(req, new_user)
+                print(f'{new_user} berhasil login.')
+                return redirect('/monitoring/')
+            else:
+                print('GAGAL MEMBUAT AKUN BARU !')
+                form = RegisterForm() 
+                return render(req, 'register.html', context={
                     'form': form
                 })
 

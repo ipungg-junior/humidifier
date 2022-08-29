@@ -1,6 +1,7 @@
 from random import randint
 from apps.models import ClientDevice, DeviceSession, DeviceUsage, ClientAccount, StandaloneDeviceSession
 from .Helper import randomNum, convertToList
+from apps.client_manager import ClientManager
 
 class ManagementDevice:
 
@@ -133,3 +134,14 @@ class ManagementDevice:
             return True, all_session
         except:
             return False, None
+
+
+class ManagementAccount:
+
+    @staticmethod
+    def create_user(req):
+        try:
+            new_user = ClientManager.create_user(email=req.POST['email'], password=req.POST['password'])
+            return None
+        except:
+            return None
