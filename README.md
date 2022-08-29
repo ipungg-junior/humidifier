@@ -61,4 +61,10 @@ Publish Data  		| /service/publish/  		| POST
     }
  
   ```
-
+  Response : 
+  ```
+    statuscode = 200
+  ```
+  
+  Jika proses Publish Data berhasil maka akan menerima status code 200, jika eror maka status code 500.
+  
