@@ -5,6 +5,7 @@ from django.conf import settings # to import static in deployment
 
 urlpatterns = [
     path('', LandingPage.as_view()),                
+    path('account/register/', Account.as_view(context='register')),
     path('account/login/', Account.as_view(context='login')),
     path('account/logout/', Account.as_view(context='logout')),    
     path('monitoring/', Monitoring.as_view(context='monitoring-list')),                        

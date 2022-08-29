@@ -2,51 +2,57 @@
 {% load static %}
 
 {% block style %}
-    <style>
-        .vh-100 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .dialog-box {
-            display: flex;
-            padding-top: 7px;
-            box-shadow: 3px 2px rgb(230, 228, 228);
-            border-radius: 10px 10px 5px 5px;
-            width: 26em;
-            height: 28em;
-            background-color: rgb(56, 148, 148);
-        }
-        .main-box {
-            width: 26em;
-            height: 27.3em;
-            background-color: rgb(248, 248, 248);
-        }
-        .logo-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 9em;
-            background-color: rgb(248, 248, 248);
-        }
-        .content-box {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-direction: column;
-            width: 100%;
-            height: 8em;
-            background-color: rgb(248, 248, 248);
-        }
-        .btn:hover {
-            color: whitesmoke;
-        }
-    </style>
+<style>
+    .vh-100 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dialog-box {
+        display: flex;
+        padding-top: 7px;
+        box-shadow: 3px 2px rgb(230, 228, 228);
+        border-radius: 10px 10px 5px 5px;
+        width: 26em;
+        height: 28em;
+        background-color: rgb(56, 148, 148);
+    }
+
+    .main-box {
+        width: 26em;
+        height: 27.3em;
+        background-color: rgb(248, 248, 248);
+    }
+
+    .logo-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 9em;
+        background-color: rgb(248, 248, 248);
+    }
+
+    .content-box {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 8em;
+        background-color: rgb(248, 248, 248);
+    }
+
+    .btn:hover {
+        color: whitesmoke;
+    }
+</style>
 {% endblock style %}
 
 
 {% block content %}
+
 <body>
 
     <div class="vh-100">
@@ -56,22 +62,26 @@
                 <div class="logo-box">
                     <div class="logo">
                         <img src="{% static 'assets/logo.png' %}" alt="Logo">
-                    </div> 
+                    </div>
                 </div>
                 <form action="" method="POST">
-                {% csrf_token %}
-                <div class="content-box">
-                    <div class="col-md-10">                        
-                        {{form.email}} 
+                    {% csrf_token %}
+                    <div class="content-box">
+                        <div class="col-md-10">
+                            {{form.email}}
+                        </div>
+                        <div class="col-md-10" style="margin-top: .5em;">
+                            {{form.password}}
+                        </div>
+                        <div class="flex" style="margin-top: 1em;">
+                            <input class="btn" type="submit" value="Submit"
+                                style="background-color:rgb(56, 148, 148); ">
+                        </div>
                     </div>
-                    <div class="col-md-10" style="margin-top: .5em;">                        
-                        {{form.password}}
-                    </div>
-                    <div class="flex" style="margin-top: 1em;">                        
-                        <input class="btn" type="submit" value="Submit" style="background-color:rgb(56, 148, 148); ">
-                    </div>
+                </form>
+                <div style="margin-top: 3em; text-align: center;">
+                    <a>Belum memiliki akun?<a href="/account/register/"> Daftar</a></a>
                 </div>
-                </form> 
             </div>
         </div>
     </div>
