@@ -3,8 +3,8 @@ import requests,time, random, json, sys
 
 
 deviceID = sys.argv[1]
-urlNewSession = 'http://127.0.0.1:8000/service/register-session/'
-urlPushData = 'http://127.0.0.1:8000/service/publish/'
+urlNewSession = 'http://192.168.50.64:8000/service/register-session/'
+urlPushData = 'http://192.168.50.64:8000/service/publish/'
 
  
 
@@ -35,6 +35,7 @@ def register(deviceID):
     req = requests.post(urlNewSession, json=requestSession)
     if req.status_code == 200:
         data = json.loads(req.text)
+        print(f'response : {data}')
         return data
     else:
         # Register fail!
@@ -46,14 +47,17 @@ time.sleep(1)
 if __name__ == '__main__':
     response = register(deviceID)
     counter = 7
-    while True:
-        if (counter==3):
-            publishData(response['sessionID'], 1)
-        else:
-            publishData(response['sessionID'], 0)
-        
-        if (counter==0):
-            counter=7
-        else:
-            counter -= 1
-        time.sleep(1)
+    if (response==None):
+        print("Bad Request")
+    else:    
+        while True:
+            if (counter==3):
+                publishData(response['sessionID'], 1)
+            else:
+                publishData(response['sessionID'], 0)
+            
+            if (counter==0):
+                counter=7
+            else:
+                counter -= 1
+            time.sleep(1)

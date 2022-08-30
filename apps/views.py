@@ -1,3 +1,4 @@
+from curses.ascii import HT
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -97,6 +98,7 @@ class EspView(View):
         if (self.context=='publish'):
             ret = Esp32.receive(req)
             return ret
+
         if (self.context=='disconnect'):
             ret = Esp32.disconnected(req)
             return ret
@@ -156,3 +158,9 @@ def deviceDetail(req, deviceID):
     })
 
 
+def deleteDeviceTable(req):
+    arr = DeviceUsage.objects.all()[:900]
+    for i, obj in enumerate(arr, start=1):
+        print(f'del {obj.sessionID} - {i}')
+        obj.delete()
+    return HttpResponse('OK')

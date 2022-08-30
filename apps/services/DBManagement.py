@@ -96,18 +96,22 @@ class ManagementDevice:
 
     @staticmethod
     def startSession(deviceID, sessionID):
-        # Ambil obj device
-        device = ClientDevice.objects.get(deviceID=deviceID)
-        # Buat obj baru di tabel DeviceSession (sesi baru)
-        d_session = DeviceSession(
-            sessionID=sessionID,
-            deviceID=device,
-            status=True
-        )
-        d_session.save()
-        # ubah status device menjadi true karna digunakan
-        device.status = True
-        device.save()
+        try:
+            # Ambil obj device
+            device = ClientDevice.objects.get(deviceID=deviceID)
+            # Buat obj baru di tabel DeviceSession (sesi baru)
+            d_session = DeviceSession(
+                sessionID=sessionID,
+                deviceID=device,
+                status=True
+            )
+            d_session.save()
+            # ubah status device menjadi true karna digunakan
+            device.status = True
+            device.save()
+            return True
+        except:
+            return False
 
 
 

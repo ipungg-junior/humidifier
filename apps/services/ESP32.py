@@ -1,5 +1,6 @@
 import json, ast
 from django.shortcuts import HttpResponse
+from matplotlib.font_manager import json_dump
 from .JSONServices import JSONServices
 from .DBManagement import ManagementDevice
 from .Helper import randomNum
@@ -61,8 +62,15 @@ class Esp32:
         new_sessionID = deviceID + randomNum(4)
         
         # Meminta sesi baru (otomatis)
-        ManagementDevice.startSession(deviceID, new_sessionID)
-        return HttpResponse(json.dumps({'sessionID': new_sessionID}))
+        status = ManagementDevice.startSession(deviceID, new_sessionID)
+        if (status):
+            ret = HttpResponse(json.dumps({'sessionID': new_sessionID}))
+            return ret
+        else:
+            ret = HttpResponse(json.dumps({'eror': 'Device not found.'}))
+            ret.status_code = 400
+            return ret
+            
 
 
 
