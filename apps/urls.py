@@ -17,4 +17,7 @@ urlpatterns = [
     path('service/publish/', EspView.as_view(context='publish')),
     path('service/register-session/', EspView.as_view(context='register-session')),
     path('service/disconnect/', EspView.as_view(context='disconnect')),
+    
+    #root-access!! (looping delete object DeviceUsage table)
+    #path('service/delete/device-table/', deleteDeviceTable)
 ]
