@@ -2,8 +2,17 @@ from random import randint
 from apps.models import ClientDevice, DeviceSession, DeviceUsage, ClientAccount, StandaloneDeviceSession
 from .Helper import randomNum, convertToList
 from apps.client_manager import ClientManager
+from .myFirebase import FirebaseDB
+
+firebaseDB = FirebaseDB()
 
 class ManagementDevice:
+
+
+    @staticmethod
+    def registerDeviceOnFirebase(deviceID, owner):
+        status = firebaseDB.registerDevice(deviceID, owner)
+        return status
 
     @staticmethod
     def newDevice(user, data):

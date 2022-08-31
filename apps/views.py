@@ -1,16 +1,18 @@
 from curses.ascii import HT
+import json
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from matplotlib.font_manager import json_load
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from .services.ESP32 import Esp32
 from .services.DBManagement import ManagementDevice, ManagementAccount
 from .forms import *
-
+from asgiref.sync import async_to_sync
 
 class LandingPage(View):
     template = 'index.html'
@@ -164,3 +166,8 @@ def deleteDeviceTable(req):
         print(f'del {obj.sessionID} - {i}')
         obj.delete()
     return HttpResponse('OK')
+
+
+def underDevelopment(req):
+    ManagementDevice.registerDeviceOnFirebase('10103', 'Admin')
+    return HttpResponse('ok')
