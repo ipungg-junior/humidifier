@@ -18,6 +18,8 @@ urlpatterns = [
     path('service/register-session/', EspView.as_view(context='register-session')),
     path('service/disconnect/', EspView.as_view(context='disconnect')),
     
-    #root-access!! (looping delete object DeviceUsage table)
-    #path('service/delete/device-table/', deleteDeviceTable)
+    #root-access!! (becareful)
+    #path('service/delete/device-table/', deleteDeviceTable),
+    path('root/firebase/', underDevelopment)
+    
 ]
