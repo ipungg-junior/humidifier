@@ -15,7 +15,7 @@ class ManagementDevice:
         return status
 
 
-
+ 
     @staticmethod
     def linkingDevice(user, data):
         '''
@@ -53,29 +53,6 @@ class ManagementDevice:
                 return False
         
         return False
-
-
-
-
-    @staticmethod
-    def newDevice(user, data):
-        data_list = convertToList(data)
-        deviceID = data_list[0]
-        deviceRoom = data_list[1]
-        try:
-            # Jika sudah terdaftar diakun req.user maka langsung return 0, already registered
-            already = ClientDevice.objects.get(deviceID=deviceID)
-            return 0
-        except:
-            # Belum terdaftar di akun req.user
-            new_device = ClientDevice.objects.create(
-                deviceID=int(deviceID),
-                deviceRoom=str(deviceRoom).replace('+', ' '),
-                clientAccount=user
-            )
-            new_device.save()
-            return 1
-
 
 
     @staticmethod
