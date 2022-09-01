@@ -1,5 +1,3 @@
-from curses.ascii import HT
-import json
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +10,6 @@ from django.contrib.auth import authenticate, login, logout
 from .services.ESP32 import Esp32
 from .services.DBManagement import ManagementDevice, ManagementAccount
 from .forms import *
-from asgiref.sync import async_to_sync
 
 class LandingPage(View):
     template = 'index.html'
@@ -84,6 +81,7 @@ class Account(View):
         else:
             return HttpResponse(code=401)
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class EspView(View):
 
@@ -91,8 +89,8 @@ class EspView(View):
 
     @csrf_exempt
     def post(self, req):
-        if (self.context=='register-device'):
-            ret = Esp32.register(req)
+        if (self.context=='linking-device'):
+            ret = Esp32.linking(req)
             return ret  
         if (self.context=='register-session'):
             ret = Esp32.registerSession(req)
@@ -100,13 +98,16 @@ class EspView(View):
         if (self.context=='publish'):
             ret = Esp32.receive(req)
             return ret
-
         if (self.context=='disconnect'):
             ret = Esp32.disconnected(req)
             return ret
 
+        
+
     def get(self, req):
-        return HttpResponse(status=400)
+        if (self.context=='register-machine-code'):
+            ret = Esp32.registerMachineCode()
+            return ret  
 
 
 class Monitoring(View):

@@ -1,4 +1,5 @@
 from django.urls import path
+from matplotlib.style import context
 from .views import *
 from django.conf import settings # to import static in deployment
 
@@ -13,7 +14,8 @@ urlpatterns = [
     path('monitoring/<str:deviceID>/usage/', deviceUsage),
     
     # Service API esp32
-    path('service/register/', EspView.as_view(context='register-device')),
+    path('service/register-machine-code/', EspView.as_view(context='register-machine-code')),
+    path('service/linking/', EspView.as_view(context='linking-device')),
     path('service/publish/', EspView.as_view(context='publish')),
     path('service/register-session/', EspView.as_view(context='register-session')),
     path('service/disconnect/', EspView.as_view(context='disconnect')),

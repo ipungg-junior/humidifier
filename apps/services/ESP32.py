@@ -12,37 +12,38 @@ class Esp32:
     ''' Class Esp32 berisi fungsi untuk menghandle 
         seluruh request dari device (esp32) '''
  
-    ## Method to handle register device
+
     @staticmethod
-    def register(req):
+    def registerMachineCode():
+        newMachineCode = randomNum(4)
+        res = HttpResponse(json.dumps({'machine-code': newMachineCode}))
+        return res
+
+
+    ## Method to handle linking device ke akun konsumen
+    @staticmethod
+    def linking(req):
         '''
-            Registrasi Device baru dengan parameter obj req dan deviceID. 
-            status -1 -> Unknown Device, 
-            status 0 -> Already Registered, 
-            status 1 -> Register Success, 
+            Kaitkan akun dengan device baru (parameter obj req dan deviceID). 
         '''
          
         try:
+            
             data = (req.body).decode('utf-8')
-            status = ManagementDevice.newDevice(req.user, data)
-            if (status==-1):
-                return HttpResponse(json.dumps({
-                    'status': -1,
-                    'flag': 'danger',
-                    'message': 'Device tidak ditemukan.',
-                }))
-            if (status==0):
-                return HttpResponse(json.dumps({
-                    'status': 0,
-                    'flag': 'warning',
-                    'message': 'Device Sudah Terdaftar',
-                }))
-            if (status==1):
+            status = ManagementDevice.linkingDevice(req.user, data)
+            if (status):
                 return HttpResponse(json.dumps({
                         'status': 1,
                         'flag': 'info',
-                        'message': 'Berhasil Didaftarkan.',
+                        'message': 'Perangkat dikaitkan.',
                     }))
+
+            else:
+                return HttpResponse(json.dumps({
+                    'status': -1,
+                    'flag': 'danger',
+                    'message': 'Proses gagal, hubungi Administrator.',
+                }))
 
         except KeyError:
             return HttpResponse(json.dumps({
@@ -71,12 +72,6 @@ class Esp32:
             ret.status_code = 400
             return ret
             
-
-
-
-    ## Method to handle delete device
-    def unregister(self):
-        pass
 
 
 
