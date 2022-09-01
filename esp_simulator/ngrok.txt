@@ -1,0 +1,6 @@
+
+1. Run server at 127.0.0.1:8000
+2. bind ngrok tcp -> ngrok tcp 127.0.0.1:8000
+3. copy public domain and port at ngrok terminal, open on browser
+   ex: 
+    url -> 0.tcp.ap.ngrok.io:17041 (open it)
