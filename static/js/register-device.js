@@ -34,7 +34,7 @@ function enableModal(){
 function register(deviceID, deviceRoom) {
     $.ajax({
         type: "POST",
-        url: "/service/register/",
+        url: "/service/linking/",
         headers: {
             "X-CSRFToken": "{{csrf_token}}",
             "Content-Type": "application/json",

@@ -14,6 +14,49 @@ class ManagementDevice:
         status = firebaseDB.registerDevice(deviceID, owner)
         return status
 
+
+
+    @staticmethod
+    def linkingDevice(user, data):
+        '''
+            Return true jika linking berhasil, false jika gagal.
+        '''
+        data_list = convertToList(data)
+        deviceID = str(data_list[0])
+        deviceRoom = str(data_list[1])
+        owner = str(user)
+        
+        # Get data info from firebase server, is that registered?
+        status = firebaseDB.getDeviceInfo(deviceID)
+        if (status is not None):
+            
+            #firebase update owner
+            sts = firebaseDB.updateDevice(deviceID, 'registered_by', owner)
+            
+            #firebase success update
+            if (sts):
+
+                try:
+                    # Jika try berhasil maka device sudah di linking (return false)
+                    obj_deviceClient = ClientDevice.objects.get(deviceID=deviceID)
+                    return False
+                except:
+                    # Jika try gagal maka device akan di proses linking (return true)
+                    new_device = ClientDevice.objects.create(
+                        deviceID=int(deviceID),
+                        deviceRoom=str(deviceRoom).replace('+', ' '),
+                        clientAccount=user
+                    )
+                    new_device.save()
+                    return True
+            else:
+                return False
+        
+        return False
+
+
+
+
     @staticmethod
     def newDevice(user, data):
         data_list = convertToList(data)

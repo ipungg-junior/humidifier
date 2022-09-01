@@ -18,7 +18,10 @@ class FirebaseDB:
         self.__DB_instance = self.__instance.database()
         
 
-    def registerDevice(self, deviceID, owner):
+    def registerDevice(self, deviceID, owner='default'):
+        '''
+            Memasukan data device baru, return True jika berhasil, False jika gagal.
+        '''
         import datetime
         tm = str(datetime.datetime.now())
         formDB = {
@@ -34,6 +37,9 @@ class FirebaseDB:
 
 
     def getDeviceInfo(self, deviceNum):
+        '''
+            Jika berhasil return dict(), jika gagal return None.
+        '''
         try:
             deviceInfo = self.__DB_instance.child('device_registered').child(deviceNum).get().val()
             queryDict = {}
