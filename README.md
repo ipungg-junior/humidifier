@@ -68,3 +68,4 @@ Publish Data  		| /service/publish/  		| POST
   
   Jika proses Publish Data berhasil maka akan menerima status code 200, jika eror maka status code 500.
   
+ --from page
