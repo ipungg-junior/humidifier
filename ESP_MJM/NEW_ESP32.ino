@@ -4,12 +4,11 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-#define USE_SERIAL Serial
-String mainUrl = "http://0.tcp.ap.ngrok.io:12928/";
+String mainUrl = "http://0.tcp.ap.ngrok.io:13424/";
 String URL_REGISTER_DEVICE = "service/register-machine-code/";
 String URL_SESSION = "service/register-session/";
 String URL_PUBLISH = "service/publish/";
-String sessionID, deviceID;
+String sessionID = "0", deviceID = "10107";
 
 WiFiMulti wifiMulti;
 HTTPClient http;
@@ -20,36 +19,47 @@ int chamberA, chamberB, suhuPasien, suhuPlate, arusPlate, arusWire, code;
 void setup()
 {
 
-  USE_SERIAL.begin(9600);
-
-  USE_SERIAL.println();
-  USE_SERIAL.println();
-  USE_SERIAL.println();
-
+  Serial.begin(9600);
+  wifiMulti.addAP("realme 9 Pro+", "11111111");
   for (uint8_t t = 4; t > 0; t--)
   {
-    USE_SERIAL.printf("[SETUP] WAIT %d...\n", t);
-    USE_SERIAL.flush();
+    Serial.printf("[SETUP] WAIT %d...\n", t);
+    Serial.flush();
     delay(1000);
   }
 
-  wifiMulti.addAP("realme 9 Pro+", "11111111");
-
-  deviceID = "10107";
-  sessionID = getSession();
+  while(!(wifiMulti.run() == WL_CONNECTED)){
+    wifiMulti.run();
+  }
+ 
+  while (sessionID == "0"){
+    sessionID = getSession();
+  }
+  
 }
 
-void loop()
-{
+void loop(){
 
-  if ((wifiMulti.run() == WL_CONNECTED))
-  {
-
-    Serial.println(deviceID + sessionID);
-    int statusCode = publishData();
-
-    delay(5000);
+  if(WL_CONNECTED){
+    //Wifi terhubung
+    
+    int statusPublish = publishData();
+    if (statusPublish == 1){
+      // Pusblish Data berhasil
+      Serial.println("Published.");  
+    }else{
+      // Pusblish Data gagal
+      Serial.println("Error.");
+    }
+    
+  }else{
+    // Wifi terputus
+    Serial.println("Tidak ada koneksi . . .");
   }
+  
+  
+  delay(3000);
+
 }
 
 String getSession()
@@ -60,24 +70,22 @@ String getSession()
   deserializeJson(doc, input);
   JsonObject obj = doc.as<JsonObject>();
 
-  Serial.print("Request session for device : ");
-  Serial.println(deviceID);
-  Serial.print("Body : ");
-  Serial.println(doc.as<String>());
   http.begin(mainUrl + URL_SESSION);
   int httpCode = http.POST(input);
-  Serial.print("Session response code : ");
-  Serial.println(httpCode);
-  String payload = http.getString();
-  DeserializationError error = deserializeJson(doc, payload);
-  http.end();
-
-  // Extract values
-  return (doc["sessionID"].as<String>());
+  if (httpCode < 0){
+    //Gagal
+    return String(0);
+  }
+  else{
+    String payload = http.getString();
+    DeserializationError error = deserializeJson(doc, payload);
+    http.end();
+    return (doc["sessionID"].as<String>());
+  }
+  
 }
 
-int publishData()
-{
+int publishData() {
   String input = "{\"deviceID\":" + deviceID + "," + 
                  "\"sessionID\":" + sessionID + "," +
                  "\"suhu_chamber_a\":" + chamberA + "," +
@@ -94,10 +102,16 @@ int publishData()
 
   http.begin(mainUrl + URL_PUBLISH);
   int httpCode = http.POST(input);
+  if (httpCode < 0){
+    //Gagal
+    http.end();
+    return -1;
+  }else{
+    http.end();
+    return 1;
+  }
 
-  String payload = http.getString();
-  http.end();
-  return httpCode;
+  
 }
 
 String getDeviceID()
@@ -126,7 +140,7 @@ String getDeviceID()
   }
   else
   {
-    USE_SERIAL.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
   }
 
   http.end();

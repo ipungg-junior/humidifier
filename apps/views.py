@@ -162,7 +162,7 @@ def deviceDetail(req, deviceID):
 
 
 def deleteDeviceTable(req):
-    arr = DeviceUsage.objects.all()[:900]
+    arr = DeviceUsage.objects.all()[:300]
     for i, obj in enumerate(arr, start=1):
         print(f'del {obj.sessionID} - {i}')
         obj.delete()
