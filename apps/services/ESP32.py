@@ -57,7 +57,7 @@ class Esp32:
     @staticmethod
     def registerSession(req):
         data = JSONServices.decode(req.body)
-        deviceID = data['deviceID']
+        deviceID = str(data['deviceID'])
 
         # buat id sesi baru otomatis (random)
         new_sessionID = deviceID + randomNum(4)
@@ -82,7 +82,7 @@ class Esp32:
         # Mengambil data sensor yang dikirim pada body request
         data = JSONServices.decode(req.body)
         # Mengambil id sesi dari device request body
-        sessionID = data['sessionID']
+        sessionID = str(data['sessionID'])
 
         try:
             ManagementDevice.record(sessionID, data)
