@@ -21,7 +21,6 @@ urlpatterns = [
     path('service/disconnect/', EspView.as_view(context='disconnect')),
     
     #root-access!! (becareful)
-    
     #path('service/delete/device-table/', deleteDeviceTable),
     #path('root/firebase/', underDevelopment)
     
