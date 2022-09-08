@@ -381,13 +381,13 @@
     var device_timelapse = [];
 
     {% for i in device_list %}
-    // Add device list as dict in Array
+    // Add device list from python context as dict in Array
     device_timelapse.push({
       'id': {{ i.deviceID }},
-      'timelive': 10,
+      'timelive': 1,
       'status': '{{i.status}}',
       'code': 0,
-      'alertCounter': 50,
+      'timeCounter': 50,
     });
 
     {% endfor %}
@@ -447,5 +447,5 @@
 
 </html>
 
-
+ 
 {% endblock content %}
