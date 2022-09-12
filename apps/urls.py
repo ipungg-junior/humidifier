@@ -1,5 +1,4 @@
 from django.urls import path
-from matplotlib.style import context
 from .views import *
 from django.conf import settings # to import static in deployment
 
@@ -21,6 +20,7 @@ urlpatterns = [
     path('service/disconnect/', EspView.as_view(context='disconnect')),
     
     #root-access!! (becareful)
+    path('supervisor/device-registrar/', Supervisor.as_view(context='device-registrar')),
     #path('service/delete/device-table/', deleteDeviceTable),
     #path('root/firebase/', underDevelopment)
     
