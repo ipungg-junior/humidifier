@@ -10,9 +10,15 @@ class ManagementDevice:
 
 
     @staticmethod
-    def registerDeviceOnFirebase(deviceID, owner):
+    def registerDeviceOnFirebase(deviceID, owner='default'):
         status = firebaseDB.registerDevice(deviceID, owner)
         return status
+
+    @staticmethod
+    def checkDeviceOnFirebase(deviceID):
+        status = firebaseDB.getDeviceInfo(deviceID)
+        return status
+
 
 
  

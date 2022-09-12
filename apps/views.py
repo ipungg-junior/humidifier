@@ -4,17 +4,16 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.decorators import login_required
-from matplotlib.font_manager import json_load
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from .services.ESP32 import Esp32
 from .services.DBManagement import ManagementDevice, ManagementAccount
 from .forms import *
+import json
 
 class LandingPage(View):
     template = 'index.html'
     def get(self, req):
-        print(req.user)
         
         return render(req, self.template, context={
             'title': 'Humidifier',
@@ -141,6 +140,24 @@ class Monitoring(View):
     def post(self, req):
         pass
 
+
+class Supervisor(View):
+    context = ''
+
+    def get(self, req):
+        if (req.user.is_superuser):
+            return render(req, "supervisor_device_registrar.html")
+
+        response_unauthorized = HttpResponse()
+        response_unauthorized.status_code = 401
+        response_unauthorized.content = "<h1> Access Denied </h1>"
+        return response_unauthorized
+
+    def post(self, req):
+        data_str = (req.body).decode('utf-8')
+        data = json.loads(data_str)
+        status = ManagementDevice.registerDeviceOnFirebase(deviceID=data['deviceID'])
+        return HttpResponse(status=200)
 
 
 
