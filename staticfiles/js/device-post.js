@@ -4,7 +4,7 @@ var all_websocket = []
 
 // Konek ke setiap device yang ada (websocket)
 for(let i=0;i<device_timelapse.length; i++){
-    all_websocket[i] = new WebSocket('ws://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
+    all_websocket[i] = new WebSocket('wss://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
     all_websocket[i].onopen = function (e) {console.log("connect " + device_timelapse[i]['id']);}
     all_websocket[i].onclose = function (e) {console.log("connect " + device_timelapse[i]['id']);}
 
@@ -75,4 +75,3 @@ var countdownTime = setInterval(function(){
         }
   }, 1000);
 
-  console.log(device_timelapse.length);

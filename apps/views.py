@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from .models import *
@@ -11,6 +12,7 @@ from .services.DBManagement import ManagementDevice, ManagementAccount
 from .forms import *
 import json
 
+@method_decorator(never_cache, name='dispatch')
 class LandingPage(View):
     template = 'index.html'
     def get(self, req):
@@ -19,7 +21,7 @@ class LandingPage(View):
             'title': 'Humidifier',
         })
 
-
+@method_decorator(never_cache, name='dispatch')
 class Account(View):
     template = ''
     context = ''
@@ -108,7 +110,7 @@ class EspView(View):
             ret = Esp32.registerMachineCode()
             return ret  
 
-
+@method_decorator(never_cache, name='dispatch')
 class Monitoring(View):
 
     context = ''
@@ -140,7 +142,7 @@ class Monitoring(View):
     def post(self, req):
         pass
 
-
+@method_decorator(never_cache, name='dispatch')
 class Supervisor(View):
     context = ''
 
