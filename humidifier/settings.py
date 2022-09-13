@@ -5,6 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=tjip4agxftf2*d#8*)i)7f$n3=v!a#-l^5)@7gu84y%!o^a67'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
 ALLOWED_HOSTS = ['*']
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 INSTALLED_APPS = [

@@ -2,9 +2,9 @@ from itertools import count
 import requests,time, random, json, sys
 
 deviceID = sys.argv[1]
-ngrokPort = sys.argv[2]
-urlNewSession = f'http://0.tcp.ap.ngrok.io:{ngrokPort}/service/register-session/'
-urlPushData = f'http://0.tcp.ap.ngrok.io:{ngrokPort}/service/publish/'
+ngrokPort = ''
+urlNewSession = f'https://b65a-103-23-224-244.jp.ngrok.io/service/register-session/'
+urlPushData = f'https://b65a-103-23-224-244.jp.ngrok.io/service/publish/'
  
 
 def publishData(sessionID, code):

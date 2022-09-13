@@ -1,0 +1,15 @@
+
+Saat migrasi ke protokol HTTPS, beberapa end-point mungkin tidak bekerja seperti websocket.
+Ganti semua skema protokol dari http -> https dan ws:// -> wss://
+
+Karena django akan bekerja di belakang Nginx, setup http-origin harus dilakukan.
+tambahkan berikut ini ke seetings.py 
+
+-> SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+dan pada config Nginx tambahkan berikut ini
+
+-> proxy_set_header X-Forwarded-Proto https;
+
+Untuk cache akan dimatikan untuk klien, jadi untu seluruh static file akan diminta setiap requestnya.
+gunakan decorator never_cache disetiap class nya untuk disable cache
