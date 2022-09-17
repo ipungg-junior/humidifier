@@ -1,7 +1,7 @@
 let incomingDeviceData = {};
 var alert, alertCounter;
 // websocket object
-const socket = new WebSocket('wss://' + window.location.host + '/streaming/' + deviceID + '/');
+const socket = new WebSocket('ws://' + window.location.host + '/streaming/' + deviceID + '/');
 // websocket connected
 socket.onopen = function (e) {
     console.log("Connection Made");
