@@ -354,14 +354,6 @@
 
       </div>
 
-      <div class="col-lg-12">
-        <div class="copyright-text">
-          <p>Copyright © 2022 Chain App Dev Company. All Rights Reserved.
-            <br>Design: <a href="https://templatemo.com/" target="_blank" title="css templates">TemplateMo</a>
-          </p>
-        </div>
-      </div>
-
     </div>
   </footer>
 
@@ -375,7 +367,7 @@
   <script src="{% static 'js/popup.js' %}"></script>
   <script src="{% static 'js/custom.js' %}"></script>
 
-  <!-- websocket configuration -->
+  
   <!-- countdown config variable -->
   <script>
     var device_timelapse = [];
@@ -387,10 +379,10 @@
       'timelive': 1,
       'status': '{{i.status}}',
       'code': 0,
-      'timeCounter': 50,
-    });
+    }); 
 
     {% endfor %}
+
 
     function report(deviceID) {
       $.ajax({
@@ -404,8 +396,7 @@
           "deviceID": deviceID,
         },
         success: function (data) {
-          console.log("success");
-          console.log(data);
+          console.log(deviceID + ' reported to server disconnect.');
         },
         failure: function (data) {
         },
