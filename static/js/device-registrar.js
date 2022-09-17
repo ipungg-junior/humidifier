@@ -10,7 +10,7 @@ btnSubmit.addEventListener('click', function (e) {
         sendReqRegistrar();
     }
 });
-
+ 
 function sendReqRegistrar(){
 
     fetch("/supervisor/device-registrar/", {

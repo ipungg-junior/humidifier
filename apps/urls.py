@@ -23,5 +23,5 @@ urlpatterns = [
     path('supervisor/device-registrar/', Supervisor.as_view(context='device-registrar')),
     #path('service/delete/device-table/', deleteDeviceTable),
     #path('root/firebase/', underDevelopment)
-    
+     
 ]

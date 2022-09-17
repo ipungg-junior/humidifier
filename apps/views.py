@@ -149,17 +149,25 @@ class Supervisor(View):
     def get(self, req):
         if (req.user.is_superuser):
             return render(req, "supervisor_device_registrar.html")
-
-        response_unauthorized = HttpResponse()
-        response_unauthorized.status_code = 401
-        response_unauthorized.content = "<h1> Access Denied </h1>"
-        return response_unauthorized
+        
+        else:
+            response_unauthorized = HttpResponse()
+            response_unauthorized.status_code = 401
+            response_unauthorized.content = "<h1> Access Denied </h1>"
+            return response_unauthorized
 
     def post(self, req):
-        data_str = (req.body).decode('utf-8')
-        data = json.loads(data_str)
-        status = ManagementDevice.registerDeviceOnFirebase(deviceID=data['deviceID'])
-        return HttpResponse(status=200)
+        if (req.user.is_superuser):
+            data_str = (req.body).decode('utf-8')
+            data = json.loads(data_str)
+            status = ManagementDevice.registerDeviceOnFirebase(deviceID=data['deviceID'])
+            return HttpResponse(status=200)
+        else:
+            print('here')
+            response_unauthorized = HttpResponse()
+            response_unauthorized.status_code = 401
+            response_unauthorized.content = "<h1> Access Denied </h1>"
+            return response_unauthorized
 
 
 

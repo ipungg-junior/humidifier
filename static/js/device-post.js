@@ -1,3 +1,14 @@
+// 
+//  Javascript ini mengatur seluruh action yg di front-end '/monitoring/'
+//  Setiap device akan memulai koneksi websocket dalam looping sebanyak jumlah device (device_timelapse)
+//  device_timelapse merupakan Array yang beisi total device yang dimiliki, element didalamnya berbentuk dict
+//  yang mengandung id, timelive, status, code.  ex: [ {}, {}, .., .. ]
+// 
+//  Pada saat page dimuat, semua timelive defaultnya adalah 1, ini untuk mentrigger semuanya menjadi merah (disconnected)
+//  jika Websocket tadi terkoneksi dengan baik, maka setiap data yg diterima dari ws akan mengganti timelive device tsb
+//  menjadi 10, dan akan berkurang 1 setiap detiknya. Maka, jika dalam 10 hitungan tidak ada data masuk dari Websocket
+//  timelive akan menjadi 0 dan device dinyatakan disconnected.
+
 
 let incomingDeviceData = {};
 var all_websocket = []
@@ -64,8 +75,6 @@ function connectedDevice(deviceID){
         }
     });
 }
-
-
 
 
 // Fungsi timer untuk memberi sinyal kepada front-end jika koneksi http dari device terputus (setiap 1 detik)
