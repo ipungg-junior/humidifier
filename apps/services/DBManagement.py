@@ -1,3 +1,4 @@
+import json
 from random import randint
 from apps.models import ClientDevice, DeviceSession, DeviceUsage, ClientAccount, StandaloneDeviceSession
 from .Helper import randomNum, convertToList
@@ -19,6 +20,28 @@ class ManagementDevice:
         status = firebaseDB.getDeviceInfo(deviceID)
         return status
 
+
+    @staticmethod
+    def getAllDevice(auth_user):
+        device_list = {}
+        if (auth_user.is_staff):
+            query_device = ClientDevice.objects.all()
+            
+            for device in query_device:
+                session_list = DeviceSession.objects.filter(deviceID=device)
+                
+                if (session_list.count() > 0):
+                    list_for_session = []
+                    for session in session_list:
+                        list_for_session.append(session.sessionID)
+                        device_list[device.deviceID] = list_for_session
+
+                else:
+                    device_list = ({device.deviceID:{}})
+                    
+            return device_list
+        else:
+            return None
 
 
  

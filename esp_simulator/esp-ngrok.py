@@ -3,8 +3,8 @@ import requests,time, random, json, sys
 
 deviceID = sys.argv[1]
 ngrokPort = ''
-urlNewSession = f'https://b65a-103-23-224-244.jp.ngrok.io/service/register-session/'
-urlPushData = f'https://b65a-103-23-224-244.jp.ngrok.io/service/publish/'
+urlNewSession = f'https://67c0-103-23-224-244.jp.ngrok.io/service/register-session/'
+urlPushData = f'https://67c0-103-23-224-244.jp.ngrok.io/service/publish/'
  
 
 def publishData(sessionID, code):
