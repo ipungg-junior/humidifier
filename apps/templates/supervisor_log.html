@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+    {% for i in list %}
+
+        <div>{{i}}</div>
+        <br>
+
+    {% endfor %}
+{% endblock content %}

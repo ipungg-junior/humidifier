@@ -111,6 +111,7 @@ class EspView(View):
             return ret  
 
 @method_decorator(never_cache, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class Monitoring(View):
 
     context = ''
@@ -140,7 +141,11 @@ class Monitoring(View):
 
 
     def post(self, req):
-        pass
+        for key, value in req.session.items():
+            print('{} => {}'.format(key, value))    
+        return HttpResponse('yay', status=200)
+
+
 
 @method_decorator(never_cache, name='dispatch')
 class Supervisor(View):
