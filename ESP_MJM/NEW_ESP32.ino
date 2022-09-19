@@ -28,8 +28,12 @@ void setup()
     delay(1000);
   }
 
-  while(!(wifiMulti.run() == WL_CONNECTED)){
-    wifiMulti.run();
+  
+  
+  for (uint8_t t = 3; t > 0; t--){
+    if(!(wifiMulti.run() == WL_CONNECTED)){
+      wifiMulti.run();
+    }
   }
  
   while (sessionID == "0"){
