@@ -1,7 +1,7 @@
 // 
 //  Javascript ini mengatur seluruh action yg di front-end '/monitoring/'
-//  Websocket setiap device akan memulai koneksinya dalam looping sebanyak jumlah device (device_timelapse)
-//  device_timelapse merupakan Array yang beisi total device yang dimiliki, setiap element berbentuk dict
+//  Setiap device akan memulai koneksi websocket dalam looping sebanyak jumlah device (device_timelapse)
+//  device_timelapse merupakan Array yang beisi total device yang dimiliki, element didalamnya berbentuk dict
 //  yang mengandung id, timelive, status, code.  ex: [ {}, {}, .., .. ]
 // 
 //  Pada saat page dimuat, semua timelive defaultnya adalah 1, ini untuk mentrigger semuanya menjadi merah (disconnected)
@@ -15,7 +15,7 @@ var all_websocket = []
  
 // Konek ke setiap device yang ada (websocket)
 for(let i=0;i<device_timelapse.length; i++){
-    all_websocket[i] = new WebSocket('ws://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
+    all_websocket[i] = new WebSocket('wss://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
     all_websocket[i].onopen = function (e) {
         console.log("WS connected " + device_timelapse[i]['id']);
     }

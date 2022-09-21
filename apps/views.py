@@ -70,7 +70,6 @@ class Account(View):
             new_user = ManagementAccount.create_user(req)
             if new_user is not None:
                 login(req, new_user)
-                print(f'{new_user} berhasil login.')
                 return redirect('/monitoring/')
             else:
                 print('GAGAL MEMBUAT AKUN BARU !')
@@ -110,6 +109,7 @@ class EspView(View):
             ret = Esp32.registerMachineCode()
             return ret  
 
+
 @method_decorator(never_cache, name='dispatch')
 @method_decorator(csrf_exempt, name='dispatch')
 class Monitoring(View):
@@ -146,13 +146,17 @@ class Monitoring(View):
         return HttpResponse('yay', status=200)
 
 
-
 @method_decorator(never_cache, name='dispatch')
 class Supervisor(View):
     context = ''
 
     def get(self, req):
         if (req.user.is_superuser):
+            if ('log-all-device'):
+                device_list = ManagementDevice.getAllDevice(auth_user=req.user)
+                return render(req, 'supervisor_log.html', context={'list': device_list})
+            if ('log-device'):
+                pass
             return render(req, "supervisor_device_registrar.html")
         
         else:

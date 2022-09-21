@@ -6,6 +6,7 @@ from apps.client_manager import ClientManager
 from .myFirebase import FirebaseDB
 
 firebaseDB = FirebaseDB()
+clientManagerAccount = ClientManager()
 
 class ManagementDevice:
 
@@ -201,12 +202,20 @@ class ManagementDevice:
             return False, None
 
 
+
+
 class ManagementAccount:
 
     @staticmethod
     def create_user(req):
+        '''
+            Fungsi untuk membuat user baru dengan param (email, password), jika berhasil return objek user,
+            jika gagal maka return None
+        '''
         try:
-            new_user = ClientManager.create_user(email=req.POST['email'], password=req.POST['password'])
-            return None
+            email=req.POST['email']
+            password=req.POST['password']
+            new_user = clientManagerAccount.create_user(email=email, password=password)
+            return new_user
         except:
             return None
