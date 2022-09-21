@@ -10,7 +10,7 @@ socket.onopen = function (e) {
 socket.onclose = function (e) {
     console.log('Connection Closed');
 }
-
+ 
 // websocket receive data
 socket.onmessage = function (e) {
     incomingDeviceData = (JSON.parse(e.data))['data'];

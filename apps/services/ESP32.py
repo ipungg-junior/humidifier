@@ -72,7 +72,7 @@ class Esp32:
             ret.status_code = 400
             return ret
             
-
+ 
 
 
     ## Method to handle receive data from API
@@ -85,9 +85,11 @@ class Esp32:
         sessionID = str(data['sessionID'])
 
         try:
+            # save database
             ManagementDevice.record(sessionID, data)
+            
+            # get layer channel
             layer = get_channel_layer()
-
             ## Send streaming PrivateWebsocket (spesific group, no broadcast)
             async_to_sync(layer.group_send)(
                 f'device_{data["deviceID"]}', 

@@ -21,6 +21,8 @@ urlpatterns = [
     
     #root-access!! (becareful)
     path('supervisor/device-registrar/', Supervisor.as_view(context='device-registrar')),
+    path('supervisor/log/', Supervisor.as_view(context='log-all-device')),
+    path('supervisor/log/<str:deviceID/', Supervisor.as_view(context='log-device')),
     #path('service/delete/device-table/', deleteDeviceTable),
     #path('root/firebase/', underDevelopment)
      
