@@ -21,7 +21,16 @@ y)
 			git commit -m "$m"
 			echo ""
 			echo "Commit completed . . ."
-			sleep 3
+			sleep 2
+			read -p " >> Push to github repo? (y/n) " pn
+			case "$pn" in
+				y)
+					clear
+					git push origin backend
+					exit;;
+				n)
+					exit;;
+			esac
 			clear;;
 	        n) 
 	        	clear
