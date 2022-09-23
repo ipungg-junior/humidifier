@@ -24,24 +24,14 @@ class ManagementDevice:
 
     @staticmethod
     def getAllDevice(auth_user):
-        device_list = {}
-        if (auth_user.is_staff):
-            query_device = ClientDevice.objects.all()
-            
-            for device in query_device:
-                session_list = DeviceSession.objects.filter(deviceID=device)
-                
-                if (session_list.count() > 0):
-                    list_for_session = []
-                    for session in session_list:
-                        list_for_session.append(session.sessionID)
-                        device_list[device.deviceID] = list_for_session
-
-                else:
-                    device_list = ({device.deviceID:{}})
-                    
-            return device_list
-        else:
+        '''
+            Fungsi untuk mengambil semua device yang ada dalam local database,
+            param di isi dengan req.user_auth
+        '''
+        try:
+            query_device = ClientDevice.objects.all()                            
+            return query_device
+        except:
             return None
 
 
@@ -133,6 +123,10 @@ class ManagementDevice:
  
     @staticmethod
     def checkSession(deviceID):
+        '''
+            Fungsi untuk mengambil seluruh session device dengan parameter obj device,
+            return (true, obj_session) atau (false, none)
+        '''
         deviceclient_object = ClientDevice.objects.get(deviceID=deviceID)
         all_session = DeviceSession.objects.filter(
             deviceID=deviceclient_object, status=True)
@@ -201,6 +195,13 @@ class ManagementDevice:
         except:
             return False, None
 
+    @staticmethod
+    def showallHistory(deviceID):
+        try:
+            all_session = DeviceSession.objects.all()
+            return True, all_session
+        except:
+            return False, None
 
 
 

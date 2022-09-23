@@ -4,6 +4,7 @@ from django.conf import settings # to import static in deployment
 
 
 urlpatterns = [
+    # WEB-BASED INTERFACE
     path('', LandingPage.as_view()),                
     path('account/register/', Account.as_view(context='register')),
     path('account/login/', Account.as_view(context='login')),
@@ -12,7 +13,7 @@ urlpatterns = [
     path('monitoring/<str:deviceID>/', Monitoring.as_view(context='monitoring-detail')),
     path('monitoring/<str:deviceID>/usage/', deviceUsage),
     
-    # Service API esp32
+    # Service API
     path('service/register-machine-code/', EspView.as_view(context='register-machine-code')),
     path('service/linking/', EspView.as_view(context='linking-device')),
     path('service/publish/', EspView.as_view(context='publish')),
@@ -23,7 +24,5 @@ urlpatterns = [
     path('supervisor/device-registrar/', Supervisor.as_view(context='device-registrar')),
     path('supervisor/log/', Supervisor.as_view(context='log-all-device')),
     path('supervisor/log/<str:deviceID/', Supervisor.as_view(context='log-device')),
-    #path('service/delete/device-table/', deleteDeviceTable),
-    #path('root/firebase/', underDevelopment)
      
 ]

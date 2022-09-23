@@ -152,12 +152,13 @@ class Supervisor(View):
 
     def get(self, req):
         if (req.user.is_superuser):
-            if ('log-all-device'):
-                device_list = ManagementDevice.getAllDevice(auth_user=req.user)
-                return render(req, 'supervisor_log.html', context={'list': device_list})
-            if ('log-device'):
+            if (self.context=='log-all-device'):
+                query_device = ManagementDevice.getAllDevice(req.user)
+                return render(req, 'supervisor_log.html', context={'deviceList': query_device})
+            if (self.context=='log-device'):
                 pass
-            return render(req, "supervisor_device_registrar.html")
+            if (self.context=='device-registrar'):
+                return render(req, "supervisor_device_registrar.html")
         
         else:
             response_unauthorized = HttpResponse()
@@ -167,10 +168,16 @@ class Supervisor(View):
 
     def post(self, req):
         if (req.user.is_superuser):
-            data_str = (req.body).decode('utf-8')
-            data = json.loads(data_str)
-            status = ManagementDevice.registerDeviceOnFirebase(deviceID=data['deviceID'])
-            return HttpResponse(status=200)
+            if (self.context == 'log-all-device'):
+                data_str = (req.body).decode('utf-8')
+                data = json.loads(data_str)
+                return HttpResponse("{'s':{data}}", status=200)
+
+            else:
+                data_str = (req.body).decode('utf-8')
+                data = json.loads(data_str)
+                status = ManagementDevice.registerDeviceOnFirebase(deviceID=data['deviceID'])
+                return HttpResponse(status=200)
         else:
             print('here')
             response_unauthorized = HttpResponse()
@@ -189,22 +196,4 @@ def deviceUsage(req, deviceID):
         return redirect('/monitoring/')
     
 
-@login_required(login_url='/account/login/', redirect_field_name='/monitoring/')
-def deviceDetail(req, deviceID):
-    device_list = req.user.clientdevice_set.all()
-    return render(req, 'device_detail.html', context={
-        'device_list' : device_list
-    })
 
-
-def deleteDeviceTable(req):
-    arr = DeviceUsage.objects.all()[:300]
-    for i, obj in enumerate(arr, start=1):
-        print(f'del {obj.sessionID} - {i}')
-        obj.delete()
-    return HttpResponse('OK')
-
-
-def underDevelopment(req):
-    ManagementDevice.registerDeviceOnFirebase('10103', 'Admin')
-    return HttpResponse('ok')

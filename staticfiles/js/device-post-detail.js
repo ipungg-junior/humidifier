@@ -16,15 +16,15 @@ socket.onmessage = function (e) {
     incomingDeviceData = (JSON.parse(e.data))['data'];
     // update data on webpage
     changeChamberA();
-    changeChamberB();
     changeOutputPasien();
     changeHeaterPlate();
-
+    changeHeaterPlateStatus();
+    changeHeaterWireStatus();
 }   
 
 
 
-// Suhu Chamber A
+// Suhu Chamber (actually chamber A)
 function changeChamberA() {
 
     selector('chamber-a-number').textContent = incomingDeviceData['suhu_chamber_a'];
@@ -42,21 +42,6 @@ function changeChamberA() {
     selector('chamber-A').style.transform = "rotate(" + (360 * incomingDeviceData['suhu_chamber_a'])/100 + "deg)"
 }
 
-// Suhu Chamber B
-function changeChamberB(){
-    selector('chamber-b-number').textContent = incomingDeviceData['suhu_chamber_b'];
-
-    if (parseInt(incomingDeviceData['suhu_chamber_b']) > 32){
-        selector('chamber-B').style.border = "0.45em solid rgb(236, 91, 91)";
-        selector('alert-chamber-b').style.display = 'initial';
-        selector('chamber-b-number').style.color = 'rgb(235, 234, 234)';
-    }else{
-        selector('chamber-B').style.border = "0.45em solid #0eaebd";
-        selector('alert-chamber-b').style.display = 'none';
-        selector('chamber-b-number').style.color = 'black';
-    }
-    selector('chamber-B').style.transform = "rotate(" + (360 * incomingDeviceData['suhu_chamber_b'])/100 + "deg)"
-}
 
 // Suhu Output Pasien
 function changeOutputPasien(){
@@ -93,6 +78,38 @@ function changeHeaterPlate(){
 }
 
 
+
+// Heater Plate Status
+function changeHeaterPlateStatus(){
+    selector('alert-heater-plate-status').style.display = 'initial'
+
+    if (parseInt(incomingDeviceData['arus_heater_plate']) > 0){
+        selector('heater-plate-text').textContent = 'ON';
+        selector('heater-plate-text').style.color = 'white';
+        selector('alert-heater-plate-status').style.backgroundColor = '#0eaebd'
+    }else{
+        selector('heater-plate-text').textContent = 'OFF';
+        selector('heater-plate-text').style.color = 'white';
+        selector('alert-heater-plate-status').style.backgroundColor = '#737979'
+    }
+
+}
+
+// Heater Wire Status
+function changeHeaterWireStatus(){
+    selector('alert-heater-wire-status').style.display = 'initial'
+
+    if (parseInt(incomingDeviceData['arus_heater_wire']) > 0){
+        selector('heater-wire-text').textContent = 'ON';
+        selector('heater-wire-text').style.color = 'white';
+        selector('alert-heater-wire-status').style.backgroundColor = '#0eaebd'
+    }else{
+        selector('heater-wire-text').textContent = 'OFF';
+        selector('heater-wire-text').style.color = 'white';
+        selector('alert-heater-wire-status').style.backgroundColor = '#737979'
+    }
+
+}
 
 
 function connectedDevice(deviceID){
