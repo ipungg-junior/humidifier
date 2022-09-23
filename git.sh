@@ -13,11 +13,10 @@ y)
 	case "$yN" in
 	        y)
 	        	clear
-	        	read -p "Input Message push repo : " m
+	        	read -p " >> Input commit Message (GITHUB BRANCH): " m
 			git add .;
 			echo "Add to local branch completed . . ."
 			echo ""
-			echo "Commit to local branch with message : $m"
 			git commit -m "$m"
 			echo ""
 			echo "Commit completed . . ."
@@ -34,6 +33,16 @@ y)
 			clear;;
 	        n) 
 	        	clear
+	        	read -p " >> Input commit Message (LOCAL BRANCH): " ml
+			git add .;
+			echo "Add to local branch completed . . ."
+			echo ""
+			echo "Commit to local branch with message : $ml"
+			git commit -m "$ml"
+			echo ""
+			echo "Commit completed . . ."
+			sleep 1
+			clear
 	esac;;
 
 n) 
