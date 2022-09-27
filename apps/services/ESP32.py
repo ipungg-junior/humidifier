@@ -79,7 +79,7 @@ class Esp32:
     @staticmethod
     def receive(req):
  
-        # Mengambil data sensor yang dikirim pada body request
+        # Mengambil data sensor yang dikirim pada body request (JSON)
         data = JSONServices.decode(req.body)
         # Mengambil id sesi dari device request body
         sessionID = str(data['sessionID'])

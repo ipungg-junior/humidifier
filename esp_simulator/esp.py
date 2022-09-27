@@ -45,7 +45,7 @@ time.sleep(1)
 
 if __name__ == '__main__':
     response = register(deviceID)
-    counter = 7
+    counter = 5
     if (response==None):
         print("Bad Request")
     else:    
@@ -56,7 +56,7 @@ if __name__ == '__main__':
                 publishData(response['sessionID'], 0)
             
             if (counter==0):
-                counter=7
+                counter=5
             else:
                 counter -= 1
             time.sleep(1)
