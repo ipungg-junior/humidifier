@@ -12,10 +12,10 @@
 
 let incomingDeviceData = {};
 var all_websocket = []
- 
+
 // Konek ke setiap device yang ada (websocket)
 for(let i=0;i<device_timelapse.length; i++){
-    all_websocket[i] = new WebSocket('wss://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
+    all_websocket[i] = new WebSocket('ws://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
     all_websocket[i].onopen = function (e) {
         console.log("WS connected " + device_timelapse[i]['id']);
     }
@@ -26,7 +26,8 @@ for(let i=0;i<device_timelapse.length; i++){
     // Websocket menerima message
     all_websocket[i].onmessage = function (e) {
         incomingDeviceData = (JSON.parse(e.data))['data'];
-    
+        console.log(incomingDeviceData);
+        console.log('===');
         // update data on webpage meneyesuaikan element css nya
         for(let i=0;i<device_timelapse.length; i++){
             let device = device_timelapse[i];

@@ -46,6 +46,15 @@ y)
 	esac;;
 
 n) 
+	read -p " >> Input commit Message (LOCAL BRANCH): " ml
+	git add .;
+	echo "Add to local branch completed . . ."
+	echo ""
+	echo "Commit to local branch with message : $ml"
+	git commit -m "$ml"
+	echo ""
+	echo "Commit completed . . ."
+	sleep 1
 	exit;;
 esac
 

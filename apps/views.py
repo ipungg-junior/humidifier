@@ -122,11 +122,14 @@ class Monitoring(View):
             if (self.context=='monitoring-list'):
                 device_list = req.user.clientdevice_set.all()
                 form = AddDeviceForm()
-                return render(req, 'monitoring.html', context={
+                response = render(req, 'monitoring.html', context={
                     'title': 'Monitoring',
                     'device_list' : device_list,
                     'form' : form
                 })
+                response['Cache-Control'] = 'no-cache'
+                return response
+                
             if (self.context=='monitoring-detail'):
                 device = ManagementDevice.getDeviceInfo(req.user, deviceID)
                 if device is None:

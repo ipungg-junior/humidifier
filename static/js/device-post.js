@@ -12,10 +12,10 @@
 
 let incomingDeviceData = {};
 var all_websocket = []
- 
+
 // Konek ke setiap device yang ada (websocket)
 for(let i=0;i<device_timelapse.length; i++){
-    all_websocket[i] = new WebSocket('wss://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
+    all_websocket[i] = new WebSocket('ws://' + window.location.host + '/streaming/' + device_timelapse[i]['id'] + '/');
     all_websocket[i].onopen = function (e) {
         console.log("WS connected " + device_timelapse[i]['id']);
     }
@@ -26,7 +26,7 @@ for(let i=0;i<device_timelapse.length; i++){
     // Websocket menerima message
     all_websocket[i].onmessage = function (e) {
         incomingDeviceData = (JSON.parse(e.data))['data'];
-    
+
         // update data on webpage meneyesuaikan element css nya
         for(let i=0;i<device_timelapse.length; i++){
             let device = device_timelapse[i];
@@ -35,11 +35,27 @@ for(let i=0;i<device_timelapse.length; i++){
             if (device['id']==incomingDeviceData['deviceID']){
                 changeTemp(incomingDeviceData['deviceID']);
                 device['timelive'] = 6;
+                device['code'] = incomingDeviceData['code'];
 
+                if (device['code'] == '0'){
+                    hideAlert(device['id']);
+                }else{
+                    showAlert(device['id']);
+                }
             }
 
         }
     }   
+}
+
+
+// show alert device 
+function showAlert(deviceID){
+    document.getElementById('alert-'+deviceID).style.display = 'initial';
+}
+
+function hideAlert(deviceID){
+    document.getElementById('alert-'+deviceID).style.display = 'none';
 }
 
 
@@ -66,7 +82,6 @@ function connectedDevice(deviceID){
     document.getElementById('card-'+deviceID).classList.remove('deactivate');
     document.getElementById('card-'+deviceID).classList.add('active');
 
-    console.log('change ' + deviceID + 'status True');
     //trace device on array
     device_timelapse.forEach(device => {
         //  jika device ditemukan maka ubah statusnya ke false lalu kirim sinyal disconnect
