@@ -14,15 +14,10 @@
     <title>Device History</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'apps/assets/css/templatemo-chain-app-dev.css' %}">
-    <link rel="stylesheet" href="{% static 'apps/assets/css/animated.css' %}">
-    <link rel="stylesheet" href="{% static 'apps/assets/css/owl.css' %}">
-    <link rel="stylesheet" href="{% static 'apps/chart/Chart.min.css' %}">
-    <script src="{% static 'apps/chart/chart.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" charset="utf-8"></script>
     
     <style>
@@ -78,35 +73,35 @@
                             labels: xValues,
                             datasets: [
                                 {
-                                    label: 'Temperature 1',
+                                    label: 'Chamber',
                                     borderColor: 'blue',
                                     fill: false,
                                     data:
                                         [
                                             {% for d in i.deviceusage_set.all %}
-                                                {{d.temp_1}},
+                                                {{d.suhu_chamber_a}},
                                             {%endfor%}                                            
                                         ]
                                 },   
                                 {
-                                    label: 'Temperature 2',
+                                    label: 'Output Pasien',
                                     borderColor: 'green',
                                     fill: false,
                                     data:
                                         [
                                             {% for d in i.deviceusage_set.all %}
-                                                {{d.temp_2}},
+                                                {{d.suhu_output_pasien}},
                                             {%endfor%}
                                         ]
                                 },
                                 {
-                                    label: 'Temperature 3',
+                                    label: 'Suhu Heater',
                                     borderColor: 'red',
                                     fill: false,
                                     data: 
                                         [
                                             {% for d in i.deviceusage_set.all %}
-                                                {{d.temp_3}},
+                                                {{d.suhu_heater_plate}},
                                             {%endfor%}
                                         ]
                                 }
