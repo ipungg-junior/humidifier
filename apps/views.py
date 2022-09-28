@@ -9,19 +9,20 @@ from .models import *
 from django.contrib.auth import authenticate, login, logout
 from .services.ESP32 import Esp32
 from .services.DBManagement import ManagementDevice, ManagementAccount
+from .services.ResponsesWorker import DefaultResponse
 from .forms import *
 import json
 
-@method_decorator(never_cache, name='dispatch')
+
 class LandingPage(View):
     template = 'index.html'
-    def get(self, req):
-        
-        return render(req, self.template, context={
+    def get(self, req): 
+        response = DefaultResponse.defaultResponse(req, self.template, context={
             'title': 'Humidifier',
         })
+        return response
 
-@method_decorator(never_cache, name='dispatch')
+
 class Account(View):
     template = ''
     context = ''
@@ -30,20 +31,16 @@ class Account(View):
         if (self.context=='login'):
             if (req.user.is_anonymous):    
                 form = LoginForm()
-                return render(req, 'login.html', 
-                    context={
-                        'form': form
-                    })
+                response = DefaultResponse.defaultResponse(req, 'login.html', context={'form':form})
+                return response
             else:
                 return redirect('/monitoring/')
 
         if (self.context=='register'):
             if (req.user.is_anonymous):    
                 form = RegisterForm()
-                return render(req, 'register.html', 
-                    context={
-                        'form': form
-                    })
+                response = DefaultResponse.defaultResponse(req, 'register.html', context={'form':form})
+                return response
             else:
                 return redirect('/monitoring/')
 
@@ -52,8 +49,10 @@ class Account(View):
             return redirect('/')
 
 
+
     def post(self, req):
         if (self.context=='login'):
+            print(req.body)
             user = authenticate(req, username=req.POST['email'], password=req.POST['password'])
             if user is not None:
                 login(req, user)
@@ -83,35 +82,6 @@ class Account(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class EspView(View):
-
-    context = ''
-
-    @csrf_exempt
-    def post(self, req):
-        if (self.context=='linking-device'):
-            ret = Esp32.linking(req)
-            return ret  
-        if (self.context=='register-session'):
-            ret = Esp32.registerSession(req)
-            return ret
-        if (self.context=='publish'):
-            ret = Esp32.receive(req)
-            return ret
-        if (self.context=='disconnect'):
-            ret = Esp32.disconnected(req)
-            return ret
-
-        
-
-    def get(self, req):
-        if (self.context=='register-machine-code'):
-            ret = Esp32.registerMachineCode()
-            return ret  
-
-
-@method_decorator(never_cache, name='dispatch')
-@method_decorator(csrf_exempt, name='dispatch')
 class Monitoring(View):
 
     context = ''
@@ -122,22 +92,22 @@ class Monitoring(View):
             if (self.context=='monitoring-list'):
                 device_list = req.user.clientdevice_set.all()
                 form = AddDeviceForm()
-                response = render(req, 'monitoring.html', context={
+                response = DefaultResponse.defaultResponse(req, 'monitoring.html', cache=False, context={
                     'title': 'Monitoring',
                     'device_list' : device_list,
                     'form' : form
                 })
-                response['Cache-Control'] = 'no-cache'
                 return response
                 
             if (self.context=='monitoring-detail'):
                 device = ManagementDevice.getDeviceInfo(req.user, deviceID)
                 if device is None:
                     return HttpResponseForbidden()
-                return render(req, 'device_detail.html', context={
+                response = DefaultResponse.defaultResponse(req, 'device_detail.html', cache=False, context={
                     'title' : f'Detail {device.deviceID}',
                     'device': device
-                    })
+                })
+                return response
 
         else:
             return redirect('/account/login/')
@@ -188,6 +158,33 @@ class Supervisor(View):
             response_unauthorized.content = "<h1> Access Denied </h1>"
             return response_unauthorized
 
+
+@method_decorator(csrf_exempt, name='dispatch')
+class EspView(View):
+
+    context = ''
+
+    @csrf_exempt
+    def post(self, req):
+        if (self.context=='linking-device'):
+            ret = Esp32.linking(req)
+            return ret  
+        if (self.context=='register-session'):
+            ret = Esp32.registerSession(req)
+            return ret
+        if (self.context=='publish'):
+            ret = Esp32.receive(req)
+            return ret
+        if (self.context=='disconnect'):
+            ret = Esp32.disconnected(req)
+            return ret
+
+        
+
+    def get(self, req):
+        if (self.context=='register-machine-code'):
+            ret = Esp32.registerMachineCode()
+            return ret  
 
 
 @login_required(login_url='/account/login/', redirect_field_name='/monitoring/')
