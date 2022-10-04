@@ -52,7 +52,6 @@ class Account(View):
 
     def post(self, req):
         if (self.context=='login'):
-            print(req.body)
             user = authenticate(req, username=req.POST['email'], password=req.POST['password'])
             if user is not None:
                 login(req, user)
@@ -71,7 +70,6 @@ class Account(View):
                 login(req, new_user)
                 return redirect('/monitoring/')
             else:
-                print('GAGAL MEMBUAT AKUN BARU !')
                 form = RegisterForm() 
                 return render(req, 'register.html', context={
                     'form': form
