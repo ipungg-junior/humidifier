@@ -1,7 +1,6 @@
 import json, random
-from channels.generic.websocket import AsyncWebsocketConsumer, WebsocketConsumer, AsyncJsonWebsocketConsumer
-from asgiref.sync import sync_to_async
-from channels.consumer import AsyncConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 
@@ -33,3 +32,19 @@ class PrivateWebsocket(AsyncWebsocketConsumer):
             'data': json.loads(data)
         }))
 
+
+
+class WebsocketWorker:
+
+    @staticmethod
+    def sendToWebsocket(channel, message):
+
+        ## Get layer channel
+        layer = get_channel_layer()
+        ## Send streaming PrivateWebsocket (spesific group, no broadcast)
+        async_to_sync(layer.group_send)(
+            f'device_{channel}', 
+        {
+            "type": "device_incoming_post",
+            "data": json.dumps(message)
+        })

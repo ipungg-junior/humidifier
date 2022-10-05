@@ -243,7 +243,7 @@
 
   <!-- MODAL HTML -->
   <div class="main-modal" id="main-modal">
-
+    {% csrf_token %}
     <div class="modal-title">
       <p>Add Device</p>
     </div>
@@ -319,58 +319,6 @@
     </div>
   </div>
 
-
-  <!-- Scripts -->
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/owl-carousel.js' %}"></script>
-  <script src="{% static 'js/animation.js' %}"></script>
-  <script src="{% static 'js/imagesloaded.js' %}"></script>
-  <script src="{% static 'js/popup.js' %}"></script>
-  <script src="{% static 'js/custom.js' %}"></script>
-
-  
-  <!-- countdown config variable -->
-  <script>
-    var device_timelapse = [];
-
-    {% for i in device_list %}
-    // Add device list from python context as dict in Array
-    device_timelapse.push({
-      'id': {{ i.deviceID }},
-      'timelive': 1,
-      'status': '{{i.status}}',
-      'code': 0,
-    }); 
-
-    {% endfor %}
-
-
-    function report(deviceID) {
-      $.ajax({
-        type: "POST",
-        url: "/service/disconnect/",
-        headers: {
-          "X-CSRFToken": "{{csrf_token}}",
-          "Content-Type": "application/json",
-        },
-        data: {
-          "deviceID": deviceID,
-        },
-        success: function (data) {
-          console.log(deviceID + ' reported to server disconnect.');
-        },
-        failure: function (data) {
-        },
-      });
-    }
-
-  </script>
-
-
-
-
-  <!-- navbar js scrolled -->
   <script type="text/javascript">
     var aa = document.getElementById("navbarID");
     var bb = document.getElementsByClassName("nav-link");
@@ -392,6 +340,30 @@
     };
   </script>
 
+  <script>
+    var device_timelapse = [];
+
+    {% for i in device_list %}
+    // Add device list from python context as dict in Array
+    device_timelapse.push({
+      'id': {{ i.deviceID }},
+      'timelive': 1,
+      'status': '{{i.status}}',
+      'code': 0,
+    }); 
+
+    {% endfor %}
+
+  </script>
+
+  <!-- Scripts -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/owl-carousel.js' %}"></script>
+  <script src="{% static 'js/animation.js' %}"></script>
+  <script src="{% static 'js/imagesloaded.js' %}"></script>
+  <script src="{% static 'js/popup.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
   <script src="{% static 'js/device-post.js' %}"></script>
   <script src="{% static 'js/register-device.js' %}"></script>
 

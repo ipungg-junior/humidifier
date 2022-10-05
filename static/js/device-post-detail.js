@@ -56,7 +56,7 @@ function changeOutputPasien(){
         selector('alert-output-pasien').style.display = 'none';
         selector('output-pasien-number').style.color = 'black';
     }
-
+ 
     selector('output-pasien').style.transform = "rotate(" + (360 * incomingDeviceData['suhu_output_pasien'])/100 + "deg)"
 }
 
