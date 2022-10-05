@@ -4,6 +4,7 @@ from matplotlib.font_manager import json_dump
 from .JSONServices import JSONServices
 from .DBManagement import ManagementDevice
 from .Helper import randomNum
+from .WebsocketConsumer import WebsocketWorker
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
@@ -75,10 +76,13 @@ class Esp32:
  
 
 
-    ## Method to handle receive data from API
+   
     @staticmethod
     def receive(req):
- 
+        '''
+            Method ini untuk menghandle request dari ESP32. Parameter (request)
+        '''
+        
         # Mengambil data sensor yang dikirim pada body request (JSON)
         data = JSONServices.decode(req.body)
         # Mengambil id sesi dari device request body
@@ -87,16 +91,8 @@ class Esp32:
         try:
             # save database
             ManagementDevice.record(sessionID, data)
-            
-            # get layer channel
-            layer = get_channel_layer()
-            ## Send streaming PrivateWebsocket (spesific group, no broadcast)
-            async_to_sync(layer.group_send)(
-                f'device_{data["deviceID"]}', 
-            {
-                "type": "device_incoming_post",
-                "data": json.dumps(data)
-            })
+            # Send to Websocket for update data on web
+            WebsocketWorker.sendToWebsocket(channel=data['deviceID'], message=data)
             return HttpResponse(status=200)
         except:
             return HttpResponse(status=500)

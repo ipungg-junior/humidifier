@@ -1,17 +1,19 @@
-// 
-//  Javascript ini mengatur seluruh action yg di front-end '/monitoring/'
-//  Setiap device akan memulai koneksi websocket dalam looping sebanyak jumlah device (device_timelapse)
-//  device_timelapse merupakan Array yang beisi total device yang dimiliki, element didalamnya berbentuk dict
-//  yang mengandung id, timelive, status, code.  ex: [ {}, {}, .., .. ]
-// 
-//  Pada saat page dimuat, semua timelive defaultnya adalah 1, ini untuk mentrigger semuanya menjadi merah (disconnected)
-//  jika Websocket tadi terkoneksi dengan baik, maka setiap data yg diterima dari ws akan mengganti timelive device tsb
-//  menjadi 10, dan akan berkurang 1 setiap detiknya. Maka, jika dalam 10 hitungan tidak ada data masuk dari Websocket
-//  timelive akan menjadi 0 dan device dinyatakan disconnected.
+/*
+  Javascript ini mengatur seluruh action yg di front-end '/monitoring/'
+  Setiap device akan memulai koneksi websocket dalam looping sebanyak jumlah device (device_timelapse)
+  device_timelapse merupakan Array yang beisi total device yang dimiliki, element didalamnya berbentuk dict
+  yang mengandung id, timelive, status, code.  ex: [ {}, {}, .., .. ]
+ 
+  Pada saat page dimuat, semua timelive defaultnya adalah 1, ini untuk mentrigger semuanya menjadi merah (disconnected)
+  jika Websocket tadi terkoneksi dengan baik, maka setiap data yg diterima dari ws akan mengganti timelive device tsb
+  menjadi 10, dan akan berkurang 1 setiap detiknya. Maka, jika dalam 10 hitungan tidak ada data masuk dari Websocket
+  timelive akan menjadi 0 dan device dinyatakan disconnected.
+*/
 
-
+var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 let incomingDeviceData = {};
 var all_websocket = []
+
 
 // Konek ke setiap device yang ada (websocket)
 for(let i=0;i<device_timelapse.length; i++){
@@ -60,7 +62,7 @@ function hideAlert(deviceID){
 
 
 function changeTemp(deviceID){
-    document.getElementById('temp-chamber-'+deviceID).textContent = incomingDeviceData['suhu_chamber_a'];
+    document.getElementById('temp-chamber-'+deviceID).textContent = incomingDeviceData['suhu_output_pasien'];
 }
 
 function disconnectedDevice(deviceID){
@@ -72,7 +74,7 @@ function disconnectedDevice(deviceID){
         //  jika device ditemukan maka ubah statusnya ke false lalu kirim sinyal disconnect
         if (device['id'] == deviceID){
             device['status'] = 'False';
-            report(deviceID);
+            reportDisconnect(deviceID);
         }
     });
     
@@ -90,6 +92,7 @@ function connectedDevice(deviceID){
         }
     });
 }
+
 
 
 // Fungsi timer untuk memberi sinyal kepada front-end jika koneksi http dari device terputus (setiap 1 detik)
@@ -117,3 +120,22 @@ var countdownTime = setInterval(function(){
         });
 
   }, 1000);
+
+
+  function reportDisconnect(deviceID) {
+    $.ajax({
+      type: "POST",
+      url: "/service/disconnect/",
+      headers: {
+        "X-CSRFToken": csrf_token,
+        "Content-Type": "application/json",
+      },
+      data: {
+        "deviceID": deviceID,
+      },
+      success: function (data) {
+      },
+      failure: function (data) {
+      },
+    });
+  }
