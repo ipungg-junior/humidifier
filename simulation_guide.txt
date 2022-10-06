@@ -1,0 +1,13 @@
+
+[Server]
+    - Connect Wifi
+    - Run django Server                                         ->  python manage.py runserver
+    - Open new terminal & run forward port with ngrok           ->  ngrok tcp 8000
+
+    - Copy ngrok address and port give to device humidifier (ex: 0.tcp.jp.ngrok.io:17208)
+    - Paste on web browser
+
+
+[Device humidifier]
+    - Paste ngrok address to mainUrl variable  (use http protocol)
+    - (optional) Change deviceID variable according to machine-code from humidifier
