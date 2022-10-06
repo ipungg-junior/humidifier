@@ -91,10 +91,24 @@ class Esp32:
         try:
             # save database
             ManagementDevice.record(sessionID, data)
-            # Send to Websocket for update data on web
-            WebsocketWorker.sendToWebsocket(channel=data['deviceID'], message=data)
+            
+            try:
+                # Send to Websocket for update data on web
+                WebsocketWorker.sendToWebsocket(channel=data['deviceID'], message=data)
+            except:
+                # If websocket failed.
+                print('Error : Websocket failed.')
+                return HttpResponse(status=404)
+
             return HttpResponse(status=200)
+
         except:
+            print(f'-- ERROR --')
+            print(f' > Session-ID\t: {sessionID}')
+            print(f' > Data\t\t: ')
+            for key in data.items():
+                print(f' {key}')
+            print(f'================================================')
             return HttpResponse(status=500)
 
 
