@@ -1,7 +1,11 @@
 from django.urls import path
-from .views import *
+from .views import deviceUsage
 from django.conf import settings # to import static in deployment
-
+from apps.view.landing import LandingPage
+from apps.view.account import Account
+from apps.view.esp import EspAPI
+from apps.view.monitoring import Monitoring
+from apps.view.supervisor import Supervisor
 
 urlpatterns = [
     # WEB-BASED INTERFACE
@@ -13,12 +17,12 @@ urlpatterns = [
     path('monitoring/<str:deviceID>/', Monitoring.as_view(context='monitoring-detail')),
     path('monitoring/<str:deviceID>/usage/', deviceUsage),
     
-    # Service API
-    path('service/register-machine-code/', EspView.as_view(context='register-machine-code')),
-    path('service/linking/', EspView.as_view(context='linking-device')),
-    path('service/publish/', EspView.as_view(context='publish')),
-    path('service/register-session/', EspView.as_view(context='register-session')),
-    path('service/disconnect/', EspView.as_view(context='disconnect')),
+    # Humidifier API
+    path('service/register-machine-code/', EspAPI.as_view(context='register-machine-code')),
+    path('service/linking/', EspAPI.as_view(context='linking-device')),
+    path('service/publish/', EspAPI.as_view(context='publish')),
+    path('service/register-session/', EspAPI.as_view(context='register-session')),
+    path('service/disconnect/', EspAPI.as_view(context='disconnect')),
     
     #root-access!! (becareful)
     path('supervisor/device-registrar/', Supervisor.as_view(context='device-registrar')),

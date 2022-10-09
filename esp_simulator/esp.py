@@ -3,11 +3,12 @@ import requests,time, random, json, sys
 
 
 deviceID = sys.argv[1]
-urlNewSession = 'http://192.168.137.64:8000/service/register-session/'
-urlPushData = 'http://192.168.137.64:8000/service/publish/'
+urlNewSession = 'http://127.0.0.1:8000/service/register-session/'
+urlPushData = 'http://127.0.0.1:8000/service/publish/'
  
 
 def publishData(sessionID, code):
+    
     temp1 = random.randint(28, 36)
     temp2 = random.randint(0, 3)
     temp3 = random.randint(0, 1)
