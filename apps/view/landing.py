@@ -10,4 +10,4 @@ class LandingPage(View):
         response = DefaultResponse.defaultResponse(req, self.template, context={
             'title': 'Humidifier',
         }, cache=False)
-        return response
+        return response 
