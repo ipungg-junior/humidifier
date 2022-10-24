@@ -11,7 +11,7 @@ from apps.services.DBManagement import ManagementDevice
 class Monitoring(View):
 
     context = ''
-
+ 
     def get(self, req, deviceID=None):
 
         if (req.user.is_authenticated):
