@@ -23,7 +23,7 @@ class Account(View):
         if (self.context=='register'):
             if (req.user.is_anonymous):    
                 form = RegisterForm()
-                response = DefaultResponse.defaultResponse(req, 'register.html', context={'form':form})
+                response = DefaultResponse.defaultResponse(req, 'register.html', context={'title':'Register','form':form})
                 return response
             else:
                 return redirect('/monitoring/')
