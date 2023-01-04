@@ -126,8 +126,24 @@ function selector(id){
 }
 
 
+
 // Fungsi timer untuk mengganti warga background card jika koneksi terputus
+var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 setInterval(function(){
-    console.log('Disconnect timer count.');
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/service/disconnect/",
+    //     headers: {
+    //       "X-CSRFToken": csrf_token,
+    //       "Content-Type": "application/json",
+    //     },
+    //     data: {
+    //       "deviceID": deviceID,
+    //     },
+    //     success: function (data) {
+    //     },
+    //     failure: function (data) {
+    //     },
+    //   });
 }, 5000);
 

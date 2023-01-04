@@ -54,7 +54,7 @@ class Esp32:
                 }))
 
 
-
+ 
     @staticmethod
     def registerSession(req):
         data = JSONServices.decode(req.body)
@@ -82,7 +82,7 @@ class Esp32:
         '''
             Method ini untuk menghandle request dari ESP32. Parameter (request)
         '''
-        
+         
         # Mengambil data sensor yang dikirim pada body request (JSON)
         data = JSONServices.decode(req.body)
         # Mengambil id sesi dari device request body
@@ -91,7 +91,7 @@ class Esp32:
         try:
             # save database
             ManagementDevice.record(sessionID, data)
-            
+
             try:
                 # Send to Websocket for update data on web
                 WebsocketWorker.sendToWebsocket(channel=data['deviceID'], message=data)
