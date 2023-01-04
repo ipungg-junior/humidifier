@@ -21,24 +21,24 @@ String c = "";
 WiFiMulti wifiMulti;
 HTTPClient http;
 
-float sensor1=12.1, sensor2=11.2, sensor3=13.0, sensor4=16.6, sensor5, sensor6, code;
-String ssid="rrrrrrrr", password="11111111";
+float sensor1 = 12.1, sensor2 = 11.2, sensor3 = 13.0, sensor4 = 16.6, sensor5, sensor6, code;
+String ssid = "rrrrrrrr", password = "11111111";
 String instruksiesp32, instruksistm32, targetsuhu, stmHeaterPlate, stmHeaterWire, stmMatchingTemp, stmCompareTemp, stmAlarm;
 void receiveEvent(int howMany);
 
 void setup()
 {
-  
-  
+
   Serial.begin(9600);
   wifiMulti.addAP("rrrrrrrr", "11111111");
   bool success = WireSlave.begin(SDA_PIN, SCL_PIN, I2C_SLAVE_ADDR);
-    if (!success) {
-        Serial.println("I2C slave init failed");
-        while(1) delay(100);
-    }
+  if (!success)
+  {
+    Serial.println("I2C slave init failed");
+    while (1)
+      delay(100);
+  }
 
-    
   for (uint8_t t = 4; t > 0; t--)
   {
     Serial.printf("[SETUP] WAIT %d...\n", t);
@@ -46,52 +46,61 @@ void setup()
     delay(1000);
   }
 
-  
-  for (uint8_t t = 3; t > 0; t--){
-    if(!(wifiMulti.run() == WL_CONNECTED)){
+  for (uint8_t t = 3; t > 0; t--)
+  {
+    if (!(wifiMulti.run() == WL_CONNECTED))
+    {
       wifiMulti.run();
     }
   }
- 
-  if (sessionID == "0"){
+
+  if (sessionID == "0")
+  {
     sessionID = getSession();
   }
-  
 }
 
-void loop(){
+void loop()
+{
   WireSlave.onReceive(receiveEvent);
   WireSlave.onRequest(requestEvent);
   WireSlave.update();
-  if(WL_CONNECTED){
-    //Wifi terhubung
-    if (sessionID == "0"){
+  if (WL_CONNECTED)
+  {
+    // Wifi terhubung
+    if (sessionID == "0")
+    {
       sessionID = getSession();
-    }else{
+    }
+    else
+    {
       int statusPublish = publishData();
-      if (statusPublish == 1){
+      if (statusPublish == 1)
+      {
         // Pusblish Data berhasil
-        Serial.println("Published.");  
-      }else{
+        Serial.println("Published.");
+      }
+      else
+      {
         // Pusblish Data gagal
         Serial.println("Error.");
       }
     }
-    
-  }else{
+  }
+  else
+  {
     wifiMulti.addAP(ssid.c_str(), password.c_str());
-    for (uint8_t t = 3; t > 0; t--){
-      if(!(wifiMulti.run() == WL_CONNECTED)){
+    for (uint8_t t = 3; t > 0; t--)
+    {
+      if (!(wifiMulti.run() == WL_CONNECTED))
+      {
         delay(2000);
         wifiMulti.run();
       }
     }
   }
-  
-  
-
 }
-
+ 
 String getSession()
 {
   String input = "{\"deviceID\":" + deviceID + "}";
@@ -102,21 +111,23 @@ String getSession()
 
   http.begin(mainUrl + URL_SESSION);
   int httpCode = http.POST(input);
-  if (httpCode < 0){
-    //Gagal
+  if (httpCode < 0)
+  {
+    // Gagal
     return String(0);
   }
-  else{
+  else
+  {
     String payload = http.getString();
     DeserializationError error = deserializeJson(doc, payload);
     http.end();
     return (doc["sessionID"].as<String>());
   }
-  
 }
 
-int publishData() {
-  String input = "{\"deviceID\":" + deviceID + "," + 
+int publishData()
+{
+  String input = "{\"deviceID\":" + deviceID + "," +
                  "\"sessionID\":" + sessionID + "," +
                  "\"suhu_chamber_a\":" + sensor3 + "," +
                  "\"suhu_chamber_b\":" + sensor2 + "," +
@@ -132,16 +143,17 @@ int publishData() {
 
   http.begin(mainUrl + URL_PUBLISH);
   int httpCode = http.POST(input);
-  if (httpCode < 0){
-    //Gagal
+  if (httpCode < 0)
+  {
+    // Gagal
     http.end();
     return -1;
-  }else{
+  }
+  else
+  {
     http.end();
     return 1;
   }
-
-  
 }
 
 String getDeviceID()
@@ -176,9 +188,9 @@ String getDeviceID()
   http.end();
 }
 
-
-void receiveEvent(int howMany) {
-  while (WireSlave.available())  // loop through all but the last byte
+void receiveEvent(int howMany)
+{
+  while (WireSlave.available()) // loop through all but the last byte
   {
     c += char(WireSlave.read());
   }
@@ -186,76 +198,83 @@ void receiveEvent(int howMany) {
   c = "";
 }
 
-void parsingdata() {
+void parsingdata()
+{
   int j;
   dt[j] = "";
-  for (int i = 1; i < c.length(); i++) {
-    if ((c[i] == '#') || (c[i] == ':')) {
+  for (int i = 1; i < c.length(); i++)
+  {
+    if ((c[i] == '#') || (c[i] == ':'))
+    {
       j++;
       dt[j] = "";
-    } else {
+    }
+    else
+    {
       dt[j] = dt[j] + c[i];
     }
   }
   Switchdata();
 }
 
-void Switchdata() {
+void Switchdata()
+{
 
-    switch (dt[0].toInt()) {
-      case 0:
-        sensor1 = dt[1].toFloat();
-        break;
-      case 1:
-        sensor2 = dt[1].toFloat();
-        break;
-      case 2:
-        sensor3 = dt[1].toFloat();
-        break;
-      case 3:
-        sensor4 = dt[1].toFloat();
-        break;
-      case 4:
-        sensor5 = dt[1].toFloat();
-        break;
-      case 5:
-        sensor6 = dt[1].toFloat();
-        break;
-      case 6:
-        ssid = dt[1];
-        break;
-      case 7:
-        password = dt[1];
-        break;
-      case 8:
-        instruksiesp32 = dt[1].toInt();
-        break;
-      case 9:
-        instruksistm32 = dt[1].toInt();
-        break;
-      case 10:
-        targetsuhu = dt[1].toInt();
-        break;
-      case 11:
-        stmHeaterPlate = dt[1].toInt();
-        break;
-      case 12:
-        stmHeaterWire = dt[1].toInt();
-        break;
-      case 13:
-        stmMatchingTemp = dt[1].toInt();
-        break;
-      case 14:
-        stmCompareTemp = dt[1].toInt();
-        break;
-      case 15:
-        stmAlarm = dt[1];
-        break;
-    }
-
+  switch (dt[0].toInt())
+  {
+  case 0:
+    sensor1 = dt[1].toFloat();
+    break;
+  case 1:
+    sensor2 = dt[1].toFloat();
+    break;
+  case 2:
+    sensor3 = dt[1].toFloat();
+    break;
+  case 3:
+    sensor4 = dt[1].toFloat();
+    break;
+  case 4:
+    sensor5 = dt[1].toFloat();
+    break;
+  case 5:
+    sensor6 = dt[1].toFloat();
+    break;
+  case 6:
+    ssid = dt[1];
+    break;
+  case 7:
+    password = dt[1];
+    break;
+  case 8:
+    instruksiesp32 = dt[1].toInt();
+    break;
+  case 9:
+    instruksistm32 = dt[1].toInt();
+    break;
+  case 10:
+    targetsuhu = dt[1].toInt();
+    break;
+  case 11:
+    stmHeaterPlate = dt[1].toInt();
+    break;
+  case 12:
+    stmHeaterWire = dt[1].toInt();
+    break;
+  case 13:
+    stmMatchingTemp = dt[1].toInt();
+    break;
+  case 14:
+    stmCompareTemp = dt[1].toInt();
+    break;
+  case 15:
+    stmAlarm = dt[1];
+    break;
+  }
 }
 
-void requestEvent() {
+void requestEvent()
+{
   WireSlave.write("*");
   ReplydataATMEGA(deviceID);
   ReplydataATMEGA(ssid);
@@ -264,7 +283,8 @@ void requestEvent() {
   WireSlave.write("#");
 }
 
-void ReplydataATMEGA(String val) {
+void ReplydataATMEGA(String val)
+{
   String dataframe = val + ":";
   WireSlave.write(dataframe.c_str());
 }
