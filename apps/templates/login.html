@@ -47,6 +47,17 @@
     .btn:hover {
         color: whitesmoke;
     }
+    .badge-info {
+        display: none;
+        position: absolute;
+        z-index: 30;
+        bottom: 15px;
+        left: 15px;
+        padding: 16px;
+        width: 320px;
+        color: white;
+        font-weight: 700;
+    }
 </style>
 {% endblock style %}
 
@@ -56,7 +67,7 @@
 <body>
 
     <div class="vh-100">
-
+        <div id="info" class="badge-info"></div>
         <div class="dialog-box">
             <div class="main-box">
                 <div class="logo-box">
@@ -64,43 +75,26 @@
                         <img src="{% static 'assets/logo.png' %}" alt="Logo">
                     </div>
                 </div>
-                <form action="" method="POST">
                     {% csrf_token %}
                     <div class="content-box">
-                        <div class="col-md-10">
-                            {{form.email}}
-                        </div>
-                        <div class="col-md-10" style="margin-top: .5em;">
-                            {{form.password}}
-                        </div>
-                        <div class="flex" style="margin-top: 1em;">
-                            <input class="btn" type="submit" value="Submit"
-                                style="background-color:rgb(56, 148, 148); ">
-                        </div>
+                    <div class="col-md-10">
+                        {{form.email}}
                     </div>
-                </form>
+                    <div class="col-md-10" style="margin-top: .5em;">
+                        {{form.password}}
+                    </div>
+                    <div class="flex" style="margin-top: 1em;">
+                        <input id="btn-login" class="btn" type="submit" value="Submit"
+                        style="background-color:rgb(56, 148, 148); ">
+                    </div>
+                </div>
                 <div style="margin-top: 3em; text-align: center;">
                     <a>Belum memiliki akun?<a href="/account/register/"> Daftar</a></a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- <form action="" method="POST">
-    {% csrf_token %}
-    <div class="row" style="height: 650px; justify-content: center;">
-        <div class="col-lg-3 align-self-center">
-            <fieldset style="margin: 5px;">
-                {{form.email}}
-            </fieldset>
-            <fieldset style="margin: 5px;">
-                {{form.password}}
-            </fieldset>
-            <fieldset style="margin-top: 18px; text-align: center;">
-            <input class="btn btn-primary" type="submit" value="Submit">
-            </fieldset>
-        </div>
-    </div>
-    </form>  -->
+    <script src="{% static 'js/login.js' %}"></script>
 </body>
 
 {% endblock content %}

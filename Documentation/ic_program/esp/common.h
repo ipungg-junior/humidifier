@@ -18,6 +18,7 @@ struct Wifi
     String defaultSSID = "Wi-Fi", defaultPASSWORD = "sigemoyyy";
     void setAP(String ss, String ps);
     bool connectWifi();
+    bool reconnect();
 };
 
 struct Web
@@ -27,7 +28,7 @@ struct Web
     String deviceID = "10101";
     String protocol = "http://";
     String domain = "0.tcp.ap.ngrok.io";
-    String port = ":18041/";
+    String port = ":17603/";
     String URL_REGISTER_DEVICE = "service/register-machine-code/";
     String URL_SESSION = "service/register-session/";
     String URL_PUBLISH = "service/publish/";
@@ -64,6 +65,28 @@ bool Wifi::connectWifi()
         }
     }
     return true;
+}
+
+bool Wifi::reconnect()
+{
+    if (Wifi::counterReconnect == 50)
+    {
+        wifiMulti.addAP((Wifi::defaultSSID).c_str(), (Wifi::defaultPASSWORD).c_str());
+        for (uint8_t t = 3; t > 0; t--)
+        {
+            if (!(wifiMulti.run() == WL_CONNECTED))
+            {
+                wifiMulti.run();
+            }
+            else
+            {
+            }
+        }
+        return true;
+    }else{
+        Wifi::counterReconnect++;
+        return false;
+    }
 }
 
 bool Web::isEstablished()
@@ -128,14 +151,14 @@ void Web::setArusHeaterPlate(int a)
 bool Web::publish()
 {
     String input = "{\"deviceID\":" + Web::deviceID + "," +
-                 "\"sessionID\":" + Web::sessionID + "," +
-                 "\"suhu_chamber_a\":" + Web::sensorChamber + "," +
-                 "\"suhu_chamber_b\":" + Web::sensorChamber + "," +
-                 "\"suhu_output_pasien\":" + Web::sensorOutputPasien + "," +
-                 "\"suhu_heater_plate\":" + Web::suhuHeaterPlate + "," +
-                 "\"arus_heater_plate\":" + Web::arusHeaterPlate + "," +
-                 "\"arus_heater_wire\":" + Web::arusHeaterPlate + "," +
-                 "\"code\":" + 0 + "}";
+                   "\"sessionID\":" + Web::sessionID + "," +
+                   "\"suhu_chamber_a\":" + Web::sensorChamber + "," +
+                   "\"suhu_chamber_b\":" + Web::sensorChamber + "," +
+                   "\"suhu_output_pasien\":" + Web::sensorOutputPasien + "," +
+                   "\"suhu_heater_plate\":" + Web::suhuHeaterPlate + "," +
+                   "\"arus_heater_plate\":" + Web::arusHeaterPlate + "," +
+                   "\"arus_heater_wire\":" + Web::arusHeaterPlate + "," +
+                   "\"code\":" + 0 + "}";
     const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
     DynamicJsonDocument doc(capacity);
     deserializeJson(doc, input);
@@ -155,4 +178,3 @@ bool Web::publish()
         return true;
     }
 }
-

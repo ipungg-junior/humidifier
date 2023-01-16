@@ -36,17 +36,21 @@ class Account(View):
 
     def post(self, req):
         if (self.context=='login'):
-            user = authenticate(req, username=req.POST['email'], password=req.POST['password'])
+            import json
+            js = json.loads((req.body).decode('utf-8'))
+            email = js['email']
+            passw = js['password']
+            user = authenticate(req, username=email, password=passw)
             if user is not None:
                 login(req, user)
-                print(f'{user} berhasil login.')
                 return redirect('/monitoring/')
             else:
-                print('{user} : Invalid password')
-                form = LoginForm() 
-                return render(req, 'login.html', context={
+                form = LoginForm()
+                res = render(req, 'login.html', context={
                     'form': form
                 })
+                res.status_code = 401
+                return res
 
         if (self.context=='register'):
             new_user = ManagementAccount.create_user(req)
@@ -55,9 +59,11 @@ class Account(View):
                 return redirect('/monitoring/')
             else:
                 form = RegisterForm() 
-                return render(req, 'register.html', context={
+                res = render(req, 'register.html', context={
                     'form': form
                 })
+                res.status_code = 401
+                return res
 
         else:
             return HttpResponse(code=401)

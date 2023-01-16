@@ -1,3 +1,4 @@
+import random
 import ast
 import json
 
@@ -16,3 +17,12 @@ class JSONServices:
     def decode(req):
         data = (req).decode('ascii')
         return ast.literal_eval(data)
+
+
+def convertToList(data):
+    result = list()
+    data = str(data).split('&')
+    for i in data:
+        result.append(i.split('=')[1])
+
+    return result

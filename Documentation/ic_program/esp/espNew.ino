@@ -3,64 +3,67 @@
 Wifi wifi;
 Web web;
 
-int rando = 1;
 String dt[12];
 String c = "";
 
-int sensor3, sensor6, instruksiesp32, instruksistm32, targetsuhu, stmHeaterPlate, stmHeaterWire, stmMatchingTemp, stmCompareTemp;
+int sensor2, sensor3, sensor6, instruksiesp32, instruksistm32, targetsuhu, stmHeaterPlate, stmHeaterWire, stmMatchingTemp, stmCompareTemp;
 String stmAlarm, password, ssid;
 
 void setup()
 {
-    Serial.begin(9600);
-    bool success = WireSlave.begin(SDA_PIN, SCL_PIN, I2C_SLAVE_ADDR);
-    while (!success)
+  Serial.begin(9600);
+  WireSlave.onReceive(receiveEvent);
+  WireSlave.onRequest(requestEvent);
+  bool success = WireSlave.begin(SDA_PIN, SCL_PIN, I2C_SLAVE_ADDR);
+  while (!success)
+  {
+    bool tmp = WireSlave.begin(SDA_PIN, SCL_PIN, I2C_SLAVE_ADDR);
+    if (tmp)
     {
-        bool tmp = WireSlave.begin(SDA_PIN, SCL_PIN, I2C_SLAVE_ADDR);
-        if (tmp)
-        {
-            success = tmp;
-            break;
-        }
+      success = tmp;
+      break;
     }
-    wifi.setAP("Wi-Fi", "sigemoyyy");
-    wifi.connectWifi()
-    delay(3000);
-    bool sts = web.getSession();
-    if (sts == false){
-        if (web.isEstablished()){
-            web.getSession();
-        }else{
-            wifi.connectWifi();
-            delay(2000);
-            web.getSession();
-        }
+  }
+  wifi.setAP("Wi-Fi", "sigemoyyy");
+  wifi.connectWifi();
+      delay(3000);
+  bool sts = web.getSession();
+  if (sts == false)
+  {
+    if (web.isEstablished())
+    {
+      web.getSession();
     }
+    else
+    {
+      wifi.connectWifi();
+      delay(2000);
+      web.getSession();
+    }
+  }
 }
 
 void loop()
 {
-    WireSlave.onReceive(receiveEvent);
-    WireSlave.onRequest(requestEvent);
-    WireSlave.update();
-    
-    if (web.isEstablished()){
-        web.setSensorChamber(rando);
-        web.setSensorOutputPasien((rando+1));
-        web.setSuhuHeaterPlate((rando+4));
-        web.setArusHeaterPlate((rando+7));
-        web.publish();
-    }
-    
-    else{
-        setup();
-    }
+  
+  WireSlave.update();
 
-    rando = rando + 2;
-    if (rando > 80){
-        rando = 1;
+  if (web.isEstablished())
+  {
+    web.setSensorChamber(web.sensorChamber);
+    web.setSensorOutputPasien(web.sensorOutputPasien);
+    web.setSuhuHeaterPlate(web.suhuHeaterPlate);
+    web.setArusHeaterPlate(12);
+    web.publish();
+  }
+  else
+  {
+    bool status = wifi.reconnect();
+    if (status)
+    {
+      web.getSession();
     }
-
+  }
 }
 
 void receiveEvent(int howMany)
@@ -70,6 +73,8 @@ void receiveEvent(int howMany)
     c += char(WireSlave.read());
   }
   parsingdata();
+  Serial.print("DATA IN : ");
+  Serial.println(c);
   c = "";
 }
 
@@ -94,17 +99,17 @@ void parsingdata()
 
 void Switchdata()
 {
-
+  
   switch (dt[0].toInt())
   {
   case 0:
     web.sensorOutputPasien = dt[1].toInt();
     break;
   case 1:
-    web.sensorChamber = dt[1].toInt();
+    sensor2 = dt[1].toInt();
     break;
   case 2:
-    sensor3 = dt[1].toInt();
+    web.sensorChamber = dt[1].toInt();
     break;
   case 3:
     web.suhuHeaterPlate = dt[1].toInt();
@@ -117,19 +122,11 @@ void Switchdata()
     break;
   case 6:
     ssid = dt[1];
-    if (ssid == ""){
-      // Nothing
-    }else{
-      wifi.defaultSSID = ssid;
-    }
+    wifi.defaultSSID = ssid;
     break;
   case 7:
     password = dt[1];
-    if (password == ""){
-      // Nothing
-    }else{
-      wifi.defaultPASSWORD = password;
-    }
+    wifi.defaultPASSWORD = password;
     break;
   case 8:
     instruksiesp32 = dt[1].toInt();
@@ -156,6 +153,36 @@ void Switchdata()
     stmAlarm = dt[1];
     break;
   }
+  Serial.print(" - OutputPasien : ");
+  Serial.println(web.sensorOutputPasien);
+  Serial.print(" - Chamber : ");
+  Serial.println(web.sensorChamber);
+  Serial.print(" - OutputPasien : ");
+  Serial.println(web.suhuHeaterPlate);
+  Serial.print(" - SSID : ");
+  Serial.println(wifi.defaultSSID);
+  Serial.print(" - SSID (local) : ");
+  Serial.println(ssid);
+  if (web.isEstablished())
+  {
+  }
+  else
+  {
+    wifi.setAP(ssid, password);
+    wifi.connectWifi();
+    delay(1000);
+    bool isOnline = web.isEstablished();
+    if (isOnline)
+    {
+      bool newSession = web.getSession();
+      delay(10);
+    }
+    else
+    {
+      wifi.connectWifi();
+      delay(100);
+    }
+  }
 }
 
 void requestEvent()
@@ -164,7 +191,7 @@ void requestEvent()
   ReplydataATMEGA(web.deviceID);
   ReplydataATMEGA(wifi.defaultSSID);
   ReplydataATMEGA(wifi.defaultPASSWORD);
-  ReplydataATMEGA("INFO");
+  ReplydataATMEGA(String(web.sensorChamber));
   WireSlave.write("#");
 }
 

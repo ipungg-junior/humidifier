@@ -62,7 +62,7 @@ function hideAlert(deviceID){
 
 
 function changeTemp(deviceID){
-    document.getElementById('temp-chamber-'+deviceID).textContent = incomingDeviceData['suhu_chamber_a'];
+    document.getElementById('temp-chamber-'+deviceID).textContent = incomingDeviceData['suhu_output_pasien'];
 }
 
 function disconnectedDevice(deviceID){

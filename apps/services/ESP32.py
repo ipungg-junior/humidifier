@@ -1,9 +1,7 @@
-import json, ast
+import json, ast, random
 from django.shortcuts import HttpResponse
-from matplotlib.font_manager import json_dump
-from .JSONServices import JSONServices
+from .utils import JSONServices
 from .DBManagement import ManagementDevice
-from .Helper import randomNum
 from .WebsocketConsumer import WebsocketWorker
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -12,11 +10,13 @@ class Esp32:
 
     ''' Class Esp32 berisi fungsi untuk menghandle 
         seluruh request dari device (esp32) '''
- 
 
     @staticmethod
     def registerMachineCode():
-        newMachineCode = randomNum(4)
+        random_num = ''
+        for i in range(0,6):
+            random_num += str(random.randint(0,9))
+        newMachineCode = random_num
         res = HttpResponse(json.dumps({'machine-code': newMachineCode}))
         return res
 
@@ -40,11 +40,13 @@ class Esp32:
                     }))
 
             else:
-                return HttpResponse(json.dumps({
+                res = HttpResponse(json.dumps({
                     'status': -1,
                     'flag': 'danger',
                     'message': 'Proses gagal, hubungi Administrator.',
                 }))
+                res.status_code = 403
+                return res
 
         except KeyError:
             return HttpResponse(json.dumps({
@@ -59,9 +61,11 @@ class Esp32:
     def registerSession(req):
         data = JSONServices.decode(req.body)
         deviceID = str(data['deviceID'])
-
+        random_session = ''
+        for i in range(0,6):
+            random_session += str(random.randint(0,9))
         # buat id sesi baru otomatis (random)
-        new_sessionID = deviceID + randomNum(4)
+        new_sessionID = deviceID + random_session
         
         # Meminta sesi baru (otomatis)
         status = ManagementDevice.startSession(deviceID, new_sessionID)
@@ -111,7 +115,7 @@ class Esp32:
             print(f'================================================')
             return HttpResponse(status=500)
 
-
+ 
 
     @staticmethod
     def disconnected(req):
