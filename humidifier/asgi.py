@@ -1,15 +1,16 @@
 import os
-import apps.services.WebsocketRoute as WebsocketRoute
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'humidifier.settings')
 from django.core.asgi import get_asgi_application
-
+django_asgi_app = get_asgi_application()
+import apps.services.WebsocketRoute as WebsocketRoute
 ## Channels conf
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'humidifier.settings')
 application = ProtocolTypeRouter(
     {
-        "http"  : get_asgi_application(),
+        "http"  : django_asgi_app,
         "websocket": AuthMiddlewareStack(URLRouter(WebsocketRoute.webSocket_urlpattern))
     }
 )
+

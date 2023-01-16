@@ -1,9 +1,11 @@
 import json
 from random import randint
 from apps.models import ClientDevice, DeviceSession, DeviceUsage, ClientAccount, StandaloneDeviceSession
-from .Helper import randomNum, convertToList
+from .utils import convertToList
 from apps.client_manager import ClientManager
 from .myFirebase import FirebaseDB
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 firebaseDB = FirebaseDB()
 clientManagerAccount = ClientManager()
@@ -214,9 +216,11 @@ class ManagementAccount:
             jika gagal maka return None
         '''
         try:
-            email=req.POST['email']
-            password=req.POST['password']
-            new_user = clientManagerAccount.create_user(email=email, password=password)
+            x = (req.body.decode('utf-8'))
+            x = json.loads(x)
+            email=validate_email(x['email'])
+            password=x['password']
+            new_user = clientManagerAccount.create_user(email=x['email'], password=password)
             return new_user
-        except:
+        except ValidationError:
             return None
