@@ -10,7 +10,7 @@ import threading
 
 urlpatterns = [
     # WEB-BASED INTERFACE
-    path('', LandingPage.as_view()),                
+    path('', LandingPage.as_view(context='landing')),                
     path('account/register/', Account.as_view(context='register')),
     path('account/login/', Account.as_view(context='login')),
     path('account/logout/', Account.as_view(context='logout')),    
@@ -29,5 +29,11 @@ urlpatterns = [
     path('supervisor/device-registrar/', Supervisor.as_view(context='device-registrar')),
     path('supervisor/log/', Supervisor.as_view(context='log-all-device')),
     path('supervisor/log/<str:deviceID/', Supervisor.as_view(context='log-device')),
+
+    # TESTING URL
+    path('testing/invoice/', LandingPage.as_view(context='test-invoice')),
+    path('testing/create-payment/', LandingPage.as_view(context='create-payment')),
+    path('testing/payment-created/', LandingPage.as_view(context='payment-created')),
+    path('testing/accept-payment/', LandingPage.as_view(context='accept-payment')),
      
 ]

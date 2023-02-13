@@ -42,15 +42,26 @@
         .btn:hover {
             color: whitesmoke;
         }
+
+        .loading {
+            display: none;
+            position: absolute;
+            z-index: 80;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(51, 48, 48, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
     </style>
 {% endblock style %}
 
 
 {% block content %}
 <body>
-
+    {% csrf_token %}
+    <div id="loading" class="loading"></div>
     <div class="vh-100">
-
         <div class="dialog-box">
             <div class="main-box">
                 <div class="logo-box">
@@ -58,7 +69,6 @@
                         <img src="{% static 'assets/logo.png' %}" alt="Logo">
                     </div> 
                 </div>
-                {% csrf_token %}
                 <div class="content-box">
                     <div class="col-md-10">                        
                         {{form.email}} 

@@ -7,7 +7,7 @@ from apps.services.ESP32 import Esp32
 class EspAPI(View):
 
     context = ''
-
+ 
     def post(self, req):
         if (self.context=='linking-device'):
             ret = Esp32.linking(req)

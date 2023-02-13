@@ -186,7 +186,7 @@
         <nav id="navbarID" class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
           <div class="container">
             <!-- logo -->
-            <a href="index.html" class="logo">
+            <a class="logo">
               <img src="{% static 'assets/logo.png' %}" alt="MJM logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -211,7 +211,6 @@
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li style="cursor: pointer;"><a class="dropdown-item" id="add-device-item"><i
                           class="fa fa-plus">&nbsp;Add Device</i></a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa fa-gear">&nbsp;Account Settings</i></a></li>
                     <li>
                       <hr style="margin-bottom: 0.3rem;">
                     </li>
@@ -238,9 +237,6 @@
       <div class="item-box text">
         {{form.deviceID}}
       </div>
-      <div class="item-box text">
-        {{form.deviceRoom}}
-      </div>
       <div class="item-box button">
         <input id="modal-btn-submit" class="modal-btn" type="submit" value="Submit">
       </div>
@@ -259,7 +255,7 @@
 
         <!-- LOOP -->
         {% for i in device_list %}
-        <div class="col-lg-2" style="width: 20%;margin: 1em 0 1em 0;">
+        <div class="col-lg-2" style="width: 18%;margin: 1em 0 1em 0;">
           <!-- alert icon -->
           <a id="alert-{{i.deviceID}}" class="alert-device"><i class="fa fa-warning"></i></a>
           
@@ -277,11 +273,6 @@
                 </div>
 
                 <div class="monitoring-card-description">
-                    <div class="monitoring-card-description room">
-                      <a style="text-align: left;">
-                        {{i.deviceRoom}}
-                      </a>
-                    </div>
                     <div class="monitoring-card-description device-id">
                       <a style="text-align: left;">
                         {{i.deviceID}}

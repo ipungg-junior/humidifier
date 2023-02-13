@@ -18,6 +18,25 @@
         align-items: center;
         color: aliceblue;
         }
+
+        /* navbar */
+
+  .navbar-colored {
+    background-color: rgb(243, 243, 243) !important;
+    transition: background-color 320ms linear;
+  }
+
+  .nav-item {
+    margin-right: 0.8rem;
+  }
+
+  .nav-link.active {
+    font-weight: bold;
+  }
+
+  .nav-link {
+    font-size: 20px;
+  }
         
     </style>
 {% endblock %}
@@ -40,7 +59,7 @@
         <nav id="navbarID" class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
             <div class="container">
                 <!-- logo -->
-                <a href="index.html" class="logo">
+                <a class="logo">
                     <img src="{% static 'assets/logo.png' %}" alt="MJM logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -52,30 +71,11 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="/">Home</a>
+                          <a style="font-size: 28px;" class="nav-link" href="/monitoring/">
+                            <i class="fa fa-sign-out"></i>
+                          </a>                          
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-black" href="/monitoring/">Monitoring</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li style="cursor: pointer;"><a class="dropdown-item" id="add-device-item"><i
-                                            class="fa fa-plus">&nbsp;Add Device</i></a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa fa-gear">&nbsp;Account
-                                            Settings</i></a></li>
-                                <li>
-                                    <hr style="margin-bottom: 0.3rem;">
-                                </li>
-                                <li><a class="dropdown-item" href="/account/logout/"><i
-                                            class="fa fa-sign-out">&nbsp;Logout</i></a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                      </ul>
                 </div>
             </div>
         </nav>
