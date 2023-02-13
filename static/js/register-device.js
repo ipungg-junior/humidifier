@@ -1,19 +1,17 @@
 var openModalBtn = document.getElementById("add-device-item");
 var modal = document.getElementById("main-modal");
 var inputDeviceID = document.getElementById("id_deviceID");
-var inputDeviceRoom = document.getElementById("id_deviceRoom");
 var submitModalBtn = document.getElementById("modal-btn-submit");
 var badgeInfo = document.getElementById("badge-info");
-var badgeInfoText = document.getElementById("badge-info-text");
+var badgeInfoText = document.getElementById("badge-info -text");
 var tmpResp = ''
-
+var csrfToken = document.getElementsByName('csrfmiddlewaretoken').value; 
 function preLoaderPage(){
     inputDeviceID.value = '';
-    inputDeviceRoom.value = '';
 }
 
 function reload(){
-    window.location.href = '/monitoring/';
+    window.location.href = '/monitoring/';  
 }
 
 function disableModal(){
@@ -27,21 +25,20 @@ function enableModal(){
     submitModalBtn.disabled = false;
     submitModalBtn.style.backgroundColor = 'rgb(17, 163, 156)';
     inputDeviceID.value = '';
-    inputDeviceRoom.value = '';
 }
 
 // Fungsi untuk register device baru
-function register(deviceID, deviceRoom) {
+function register(deviceID) {
+    alert(csrfToken);
     $.ajax({
         type: "POST",
         url: "/service/linking/",
         headers: {
-            "X-CSRFToken": "{{csrf_token}}",
+            "X-CSRFToken": csrfToken,
             "Content-Type": "application/json",
         },
         data: {
             "deviceID": deviceID,
-            "deviceRoom": deviceRoom,
         },
         success: function (data) {
             tmpResp = (JSON.parse(data));
@@ -81,7 +78,7 @@ function register(deviceID, deviceRoom) {
 
 submitModalBtn.onclick = function (){
     disableModal();
-    register(inputDeviceID.value, inputDeviceRoom.value);
+    register(inputDeviceID.value);
 }
 
 openModalBtn.onclick = function () {

@@ -27,7 +27,6 @@ class Esp32:
         '''
             Kaitkan akun dengan device baru (parameter obj req dan deviceID). 
         '''
-         
         try:
             
             data = (req.body).decode('utf-8')
@@ -56,7 +55,6 @@ class Esp32:
                 }))
 
 
- 
     @staticmethod
     def registerSession(req):
         data = JSONServices.decode(req.body)
@@ -77,15 +75,12 @@ class Esp32:
             ret.status_code = 400
             return ret
             
- 
-
-
    
     @staticmethod
     def receive(req):
         '''
             Method ini untuk menghandle request dari ESP32. Parameter (request)
-        '''
+        ''' 
          
         # Mengambil data sensor yang dikirim pada body request (JSON)
         data = JSONServices.decode(req.body)
@@ -114,7 +109,6 @@ class Esp32:
                 print(f' {key}')
             print(f'================================================')
             return HttpResponse(status=500)
-
  
 
     @staticmethod

@@ -43,9 +43,7 @@ class ManagementDevice:
         '''
             Return true jika linking berhasil, false jika gagal.
         '''
-        data_list = convertToList(data)
-        deviceID = str(data_list[0])
-        deviceRoom = str(data_list[1])
+        deviceID = str(data)
         owner = str(user)
         
         # Get data info from firebase server, is that registered?
@@ -66,7 +64,7 @@ class ManagementDevice:
                     # Jika try gagal maka device akan di proses linking (return true)
                     new_device = ClientDevice.objects.create(
                         deviceID=int(deviceID),
-                        deviceRoom=str(deviceRoom).replace('+', ' '),
+                        deviceRoom=str(''),
                         clientAccount=user
                     )
                     new_device.save()
@@ -205,7 +203,7 @@ class ManagementDevice:
         except:
             return False, None
 
-
+ 
 
 class ManagementAccount:
 

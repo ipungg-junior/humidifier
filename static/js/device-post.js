@@ -36,7 +36,7 @@ for(let i=0;i<device_timelapse.length; i++){
 
             if (device['id']==incomingDeviceData['deviceID']){
                 changeTemp(incomingDeviceData['deviceID']);
-                device['timelive'] = 6;
+                device['timelive'] = 15;  // waiting for connection
                 device['code'] = incomingDeviceData['code'];
 
                 if (device['code'] == '0'){
