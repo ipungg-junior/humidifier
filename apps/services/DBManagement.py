@@ -3,7 +3,6 @@ from random import randint
 from apps.models import ClientDevice, DeviceSession, DeviceUsage, ClientAccount, StandaloneDeviceSession
 from .utils import convertToList
 from apps.client_manager import ClientManager
-from .myFirebase import FirebaseDB
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
