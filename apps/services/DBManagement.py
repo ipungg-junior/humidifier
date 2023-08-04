@@ -6,22 +6,20 @@ from apps.client_manager import ClientManager
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
-firebaseDB = FirebaseDB()
 clientManagerAccount = ClientManager()
 
 class ManagementDevice:
 
 
-    @staticmethod
-    def registerDeviceOnFirebase(deviceID, owner='default'):
-        status = firebaseDB.registerDevice(deviceID, owner)
-        return status
+    # @staticmethod
+    # def registerDeviceOnFirebase(deviceID, owner='default'):
+    #     status = firebaseDB.registerDevice(deviceID, owner)
+    #     return status
 
-    @staticmethod
-    def checkDeviceOnFirebase(deviceID):
-        status = firebaseDB.getDeviceInfo(deviceID)
-        return status
-
+    # @staticmethod
+    # def checkDeviceOnFirebase(deviceID):
+    #     status = firebaseDB.getDeviceInfo(deviceID)
+    #     return status
 
     @staticmethod
     def getAllDevice(auth_user):
@@ -36,7 +34,6 @@ class ManagementDevice:
             return None
 
 
- 
     @staticmethod
     def linkingDevice(user, data):
         '''
@@ -46,32 +43,32 @@ class ManagementDevice:
         owner = str(user)
         
         # Get data info from firebase server, is that registered?
-        status = firebaseDB.getDeviceInfo(deviceID)
-        if (status is not None):
+        # status = firebaseDB.getDeviceInfo(deviceID)
+        # if (status is not None):
             
-            #firebase update owner
-            sts = firebaseDB.updateDevice(deviceID, 'registered_by', owner)
+        #     #firebase update owner
+        #     # sts = firebaseDB.updateDevice(deviceID, 'registered_by', owner)
             
-            #firebase success update
-            if (sts):
+        #     #firebase success update
+        #     if (sts):
 
-                try:
-                    # Jika try berhasil maka device sudah di linking (return false)
-                    obj_deviceClient = ClientDevice.objects.get(deviceID=deviceID)
-                    return False
-                except:
-                    # Jika try gagal maka device akan di proses linking (return true)
-                    new_device = ClientDevice.objects.create(
-                        deviceID=int(deviceID),
-                        deviceRoom=str(''),
-                        clientAccount=user
-                    )
-                    new_device.save()
-                    return True
-            else:
-                return False
+        #         try:
+        #             # Jika try berhasil maka device sudah di linking (return false)
+        #             obj_deviceClient = ClientDevice.objects.get(deviceID=deviceID)
+        #             return False
+        #         except:
+        #             # Jika try gagal maka device akan di proses linking (return true)
+        #             new_device = ClientDevice.objects.create(
+        #                 deviceID=int(deviceID),
+        #                 deviceRoom=str(''),
+        #                 clientAccount=user
+        #             )
+        #             new_device.save()
+        #             return True
+        #     else:
+        #         return False
         
-        return False
+        # return False
 
 
     @staticmethod
