@@ -18,7 +18,13 @@ class ManagementDevice:
             return False
         except:
             # Register device processing
-            return True
+            try:
+                new_device = ClientDevice(deviceID=deviceID)
+                new_device.save()
+                return True
+            except:
+                return False
+            
 
     @staticmethod
     def getAllDevice(auth_user):
@@ -139,7 +145,6 @@ class ManagementDevice:
         device.save()
         session_device.status = False
         session_device.save()
-
 
 
     @staticmethod

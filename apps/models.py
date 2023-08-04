@@ -29,7 +29,7 @@ class ClientDevice(models.Model):
         setiap RS harus mendaftarkan perangkatnya agar terhubung dengan akun RS
     '''
 
-    deviceID = models.IntegerField(null=True, default=0)
+    deviceID = models.CharField(blank=True, max_length=18)
     clientAccount = models.ForeignKey(ClientAccount, on_delete=models.CASCADE, null=True)
     status = models.BooleanField(default=False)
     deviceRoom = models.CharField(max_length=16, blank=True)
