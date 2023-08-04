@@ -20,11 +20,6 @@ class ManagementDevice:
             # Register device processing
             return True
 
-    # @staticmethod
-    # def checkDeviceOnFirebase(deviceID):
-    #     status = firebaseDB.getDeviceInfo(deviceID)
-    #     return status
-
     @staticmethod
     def getAllDevice(auth_user):
         '''

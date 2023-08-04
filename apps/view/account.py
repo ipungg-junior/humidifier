@@ -5,8 +5,6 @@ from apps.forms import LoginForm, RegisterForm
 from apps.services.ResponsesWorker import DefaultResponse
 from apps.services.DBManagement import ManagementAccount
 
-
-
 class Account(View):
     template = ''
     context = ''
