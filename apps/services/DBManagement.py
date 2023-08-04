@@ -10,11 +10,15 @@ clientManagerAccount = ClientManager()
 
 class ManagementDevice:
 
-
-    # @staticmethod
-    # def registerDeviceOnFirebase(deviceID, owner='default'):
-    #     status = firebaseDB.registerDevice(deviceID, owner)
-    #     return status
+    @staticmethod
+    def device_registrar(deviceID, owner='default'):
+        try:
+            # Object already registered
+            device = ClientDevice.objects.get(deviceID=deviceID)
+            return False
+        except:
+            # Register device processing
+            return True
 
     # @staticmethod
     # def checkDeviceOnFirebase(deviceID):

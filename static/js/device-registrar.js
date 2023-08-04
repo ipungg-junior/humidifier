@@ -24,6 +24,10 @@ function sendReqRegistrar(){
         })
       }).then(res => {
         // print resp just for development, delete on production
-        console.log(res);
+        if (res.status == 200){
+            alert("Registrasi berhasil");
+        }else{
+            alert("ERROR (401) Device Already Registered!");
+        }
       });
 }
