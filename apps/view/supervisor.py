@@ -35,8 +35,11 @@ class Supervisor(View):
             else:
                 data_str = (req.body).decode('utf-8')
                 data = json.loads(data_str)
-                status = ManagementDevice.registerDeviceOnFirebase(deviceID=data['deviceID'])
-                return HttpResponse(status=200)
+                status = ManagementDevice.device_registrar(deviceID=data['deviceID'])
+                if status:
+                    return HttpResponse(status=200)
+                else:
+                    return HttpResponse(status=401)
         else:
             print('here')
             response_unauthorized = HttpResponse()
