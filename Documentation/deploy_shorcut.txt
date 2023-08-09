@@ -1,0 +1,15 @@
+### MAKE SERVICE LINUX systemd
+
+- create a file called /etc/systemd/system/rot13.service:
+
+[Unit]
+Description=Own Server
+After=network.target
+[Service]
+User=root
+ExecStart=/usr/bin/python3 /root/humidifier/manage.py runserver 0.0.0.0:8000
+[Install]
+WantedBy=multi-user.target
+
+- systemctl start $service_name
+- systemctl enable $service_name

@@ -11,7 +11,10 @@ clientManagerAccount = ClientManager()
 class ManagementDevice:
 
     @staticmethod
-    def device_registrar(deviceID, owner='default'):
+    def device_registrar(deviceID:str, owner='default'):
+        '''
+            Fungsi untuk mendaftarkan device baru ke dalam database.
+        '''
         try:
             # Object already registered
             device = ClientDevice.objects.get(deviceID=deviceID)
@@ -27,7 +30,7 @@ class ManagementDevice:
             
 
     @staticmethod
-    def getAllDevice(auth_user):
+    def getAllDevice(auth_user:str):
         '''
             Fungsi untuk mengambil semua device yang ada dalam local database,
             param di isi dengan req.user_auth
